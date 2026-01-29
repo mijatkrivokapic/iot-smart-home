@@ -1,10 +1,22 @@
 {
     "PI1": {
-        "DS1": { "simulated": true, "pin": 21 },
-        "DL":  { "simulated": true, "pin": 18 },
-        "DUS1": { "simulated": true, "trig": 23, "echo": 24 },
-        "DB":  { "simulated": true, "pin": 25 },
-        "DPIR1": { "simulated": true, "pin": 16 },
-        "DMS": { "simulated": true, "pins": [5, 6, 13, 19, 26, 20, 21, 22] }
+        "DS1": { "simulated": true, "pin": 21, "topic": "home/door_sensor" },
+        "DL":  { "simulated": true, "pin": 18, "topic": "home/door_light" },
+        "DUS1": { "simulated": true, "trig": 23, "echo": 24, "topic": "home/ultrasonic" },
+        "DB":  { "simulated": true, "pin": 25, "topic": "home/buzzer" },
+        "DPIR1": { "simulated": true, "pin": 16, "topic": "home/motion" },
+        "DMS": { "simulated": true, "pins": [5, 6, 13, 19, 26, 20, 21, 22], "topic": "home/keypad" }
+    },
+    "MQTT": {
+        "broker": "localhost",
+        "port": 1883,
+        "batch_size": 5,
+        "batch_timeout": 5
+    },
+    "InfluxDB": {
+        "url": "http://localhost:8086",
+        "token": "B8HDBR5Sh9cCibUUGyUAM2rDL4ajESUs_UyUHpRp52OT3mL1IriRtRCD2cnnix-09BGs1_OU9xv9HMNXnWDSGg==",
+        "org": "FTN",
+        "bucket": "sensor_data"
     }
 }
