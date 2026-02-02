@@ -1,0 +1,133 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dfc24g6c3356oe"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "shades"
+          },
+          "custom": {
+            "axisPlacement": "auto",
+            "fillOpacity": 70,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineWidth": 1,
+            "spanNulls": false
+          },
+          "displayName": "Door Button",
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "RELEASED"
+                },
+                "1": {
+                  "color": "dark-red",
+                  "index": 1,
+                  "text": "PRESSED"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "auto",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "dfc24g6c3356oe"
+          },
+          "query": "from(bucket: \"sensor_data\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"DS1\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last)\r\n  |> yield(name: \"last\")\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "DS1",
+      "type": "state-timeline"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Dashboard",
+  "uid": "adk82vw",
+  "version": 3
+}
