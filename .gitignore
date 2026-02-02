@@ -148,3 +148,7 @@ cython_debug/
 .history/
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Python,VisualStudioCode
+
+infrastructure/broker-data/
+infrastructure/influxdb/data/
+infrastructure/broker-log/

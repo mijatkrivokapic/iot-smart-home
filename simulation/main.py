@@ -8,6 +8,7 @@ from components.ds import run_ds
 from components.dms import run_dms
 from components.dl import toggle_light
 from components.db import toggle_buzzer
+from mqtt_publisher import init_mqtt_publisher, get_mqtt_publisher
 
 try:
     import RPi.GPIO as GPIO
@@ -49,8 +50,19 @@ if __name__ == "__main__":
 
     settings = load_settings()
     pi1_settings = settings['PI1']
+    mqtt_settings = settings.get('MQTT', {})
+    
     threads = []
     stop_event = threading.Event()
+    
+    # Initialize MQTT Publisher
+    mqtt_publisher = init_mqtt_publisher(
+        broker=mqtt_settings.get('broker', 'localhost'),
+        port=mqtt_settings.get('port', 1883),
+        batch_size=mqtt_settings.get('batch_size', 5),
+        batch_timeout=mqtt_settings.get('batch_timeout', 5)
+    )
+    print("MQTT Publisher initialized")
 
     if not args or ( '--sensors' not in args and '--actuators' not in args):
         print("Please specify --sensors, --actuators, or both.")
@@ -75,6 +87,11 @@ if __name__ == "__main__":
             stop_event.set()
             for t in threads:
                 t.join(timeout=1)
+            
+            mqtt_pub = get_mqtt_publisher()
+            if mqtt_pub:
+                mqtt_pub.stop()
+            
             try:
                 GPIO.cleanup()
             except:
