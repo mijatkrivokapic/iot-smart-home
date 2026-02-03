@@ -1,7 +1,9 @@
 import threading
 import time
-from simulators.dms import run_dms_simulator
+
 from mqtt_publisher import send_measurement
+from simulators.dms import run_dms_simulator
+
 
 def dms_callback(key, sensor_config):
     t = time.localtime()
@@ -12,7 +14,7 @@ def dms_callback(key, sensor_config):
     
     # Send measurement to MQTT
     topic = sensor_config.get('topic', 'home/keypad')
-    send_measurement(topic, key, "DMS", is_simulated=sensor_config['simulated'])
+    send_measurement(topic, key, "DMS", sensor_config['device'], is_simulated=sensor_config['simulated'])
 
 def run_dms(settings, threads, stop_event):
     if settings['simulated']:

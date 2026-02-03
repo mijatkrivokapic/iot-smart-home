@@ -1,7 +1,9 @@
 import threading
 import time
-from simulators.dus import run_dus_simulator
+
 from mqtt_publisher import send_measurement
+from simulators.dus import run_dus_simulator
+
 
 def dus_callback(distance, sensor_config):
     t = time.localtime()
@@ -12,7 +14,7 @@ def dus_callback(distance, sensor_config):
     
     # Send measurement to MQTT
     topic = sensor_config.get('topic', 'home/ultrasonic')
-    send_measurement(topic, distance, "DUS1", is_simulated=sensor_config['simulated'])
+    send_measurement(topic, distance, "DUS1", sensor_config['device'], is_simulated=sensor_config['simulated'])
 
 def run_dus(settings, threads, stop_event):
     if settings['simulated']:
