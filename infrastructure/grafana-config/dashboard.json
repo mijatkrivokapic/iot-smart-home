@@ -284,7 +284,7 @@
       "pluginVersion": "12.3.2",
       "targets": [
         {
-          "query": "from(bucket: \"sensor_data\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"DB\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)\r\n  |> yield()\r\n",
+          "query": "from(bucket: \"sensor_data\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"DB\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max)\r\n  |> yield()\r\n",
           "refId": "A"
         }
       ],
@@ -470,20 +470,15 @@
             "lineWidth": 0,
             "spanNulls": false
           },
-          "displayName": "Motion Detection",
+          "displayName": "Motion",
           "fieldMinMax": false,
           "mappings": [
             {
               "options": {
-                "0": {
-                  "color": "green",
-                  "index": 0,
-                  "text": "No Motion"
-                },
                 "1": {
                   "color": "red",
-                  "index": 1,
-                  "text": "Motion"
+                  "index": 0,
+                  "text": "Motion Detected"
                 }
               },
               "type": "value"
@@ -531,7 +526,7 @@
       "pluginVersion": "12.3.2",
       "targets": [
         {
-          "query": "from(bucket: \"sensor_data\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"DPIR1\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)\r\n  |> yield()\r\n",
+          "query": "from(bucket: \"sensor_data\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => \r\n       r._measurement == \"DPIR1\" and\r\n       r._field == \"value\" and\r\n       r._value == 1\r\n  )\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max)\r\n  |> yield()\r\n",
           "refId": "A"
         }
       ],
@@ -553,5 +548,5 @@
   "timezone": "browser",
   "title": "Dashboard",
   "uid": "adk82vw",
-  "version": 12
+  "version": 14
 }
