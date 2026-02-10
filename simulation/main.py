@@ -50,6 +50,7 @@ if __name__ == "__main__":
 
     settings = load_settings()
     pi1_settings = settings['PI1']
+    pi2_settings = settings['PI2']
     mqtt_settings = settings.get('MQTT', {})
     
     threads = []
@@ -68,18 +69,33 @@ if __name__ == "__main__":
         print("Please specify --sensors, --actuators, or both.")
     else:
         try:
-            if '--sensors' in args:
-                print("Starting sensor monitoring...")
-                run_ds(pi1_settings['DS1'], threads, stop_event)
-                run_dus(pi1_settings['DUS1'], threads, stop_event)
-                run_pir(pi1_settings['DPIR1'], threads, stop_event)
-                run_dms(pi1_settings['DMS'], threads, stop_event)
+            if args[0] == '--1':
+                print("Running in PI1 mode")
+                if '--sensors' in args:
+                    print("Starting pi1 sensor monitoring...")
+                    run_ds(pi1_settings['DS1'], threads, stop_event)
+                    run_dus(pi1_settings['DUS1'], threads, stop_event)
+                    run_pir(pi1_settings['DPIR1'], threads, stop_event)
+                    run_dms(pi1_settings['DMS'], threads, stop_event)
 
-            if '--actuators' in args:
-                run_actuators_logic(pi1_settings)
-            else:
-                while True:
-                    time.sleep(1)
+                if '--actuators' in args:
+                    run_actuators_logic(pi1_settings)
+                else:
+                    while True:
+                        time.sleep(1)
+            elif args[0] == '--2':
+                print("Running in PI2 mode")
+                if '--sensors' in args:
+                    print("Starting pi2 sensor monitoring...")
+                    run_ds(pi2_settings['DS2'], threads, stop_event)
+                    run_dus(pi2_settings['DUS2'], threads, stop_event)
+                    run_pir(pi2_settings['DPIR2'], threads, stop_event)
+                    
+                if '--actuators' in args:
+                    run_actuators_logic(pi1_settings)
+                else:
+                    while True:
+                        time.sleep(1)
 
         except KeyboardInterrupt:
             print("\nStopping application...")

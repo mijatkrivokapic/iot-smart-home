@@ -1,5 +1,8 @@
 from mqtt_publisher import send_measurement
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    pass
 
 
 def toggle_buzzer(settings, state):

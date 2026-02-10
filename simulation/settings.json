@@ -7,6 +7,11 @@
         "DPIR1": { "device":"PI1", "simulated": true, "pin": 16, "topic": "home/motion" },
         "DMS": { "device":"PI1", "simulated": true, "pins": [5, 6, 13, 19, 26, 20, 21, 22], "topic": "home/keypad" }
     },
+    "PI2": {
+        "DS2": { "device": "PI2", "simulated": true, "pin": 21, "topic": "home/door_sensor" },
+        "DUS2": { "device": "PI2", "simulated": true, "trig": 23, "echo": 24, "topic": "home/ultrasonic" },
+        "DPIR2": { "device":"PI2", "simulated": true, "pin": 16, "topic": "home/motion" }
+    },
     "MQTT": {
         "broker": "localhost",
         "port": 1883,

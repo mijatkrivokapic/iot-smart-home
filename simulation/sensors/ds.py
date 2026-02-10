@@ -1,4 +1,7 @@
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    pass
 import time
 
 def run_ds_sensor(delay, callback, stop_event, sensor_config=None):
