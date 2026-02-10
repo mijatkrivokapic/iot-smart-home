@@ -1,17 +1,18 @@
-from flask import Flask, jsonify, request
-from influxdb_client import InfluxDBClient, Point
-from influxdb_client.client.write_api import SYNCHRONOUS
-import paho.mqtt.client as mqtt
 import json
 import threading
 import time
 from queue import Queue
 
+import paho.mqtt.client as mqtt
+from flask import Flask, jsonify, request
+from influxdb_client import InfluxDBClient, Point
+from influxdb_client.client.write_api import SYNCHRONOUS
+
 app = Flask(__name__)
 
 INFLUXDB_CONFIG = {
     "url": "http://localhost:8086",
-    "token": "my-super-secret-admin-token",
+    "token": "B8HDBR5Sh9cCibUUGyUAM2rDL4ajESUs_UyUHpRp52OT3mL1IriRtRCD2cnnix-09BGs1_OU9xv9HMNXnWDSGg==",
     "org": "FTN",
     "bucket": "sensor_data"
 }
@@ -117,6 +118,7 @@ def write_to_influxdb(topic, payload):
     
     try:
         sensor_name = payload.get("sensor", "Unknown")
+        device_name = payload.get("device", "Unknown")
         value = payload.get("value", 0)
         is_simulated = payload.get("simulated", False)
         timestamp = payload.get("timestamp", time.time())
@@ -125,6 +127,7 @@ def write_to_influxdb(topic, payload):
         point = (
             Point(sensor_name)  # measurement name
             .tag("sensor", sensor_name)
+            .tag("device", device_name)
             .tag("topic", topic)
             .tag("simulated", str(is_simulated))
             .field("value", value)

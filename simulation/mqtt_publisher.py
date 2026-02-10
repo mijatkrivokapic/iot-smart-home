@@ -1,9 +1,10 @@
-import threading
-import queue
 import json
+import queue
+import threading
 import time
-import paho.mqtt.client as mqtt
 from collections import defaultdict
+
+import paho.mqtt.client as mqtt
 
 
 class MQTTBatchPublisher:
@@ -72,7 +73,7 @@ class MQTTBatchPublisher:
         self.daemon_thread = threading.Thread(target=self._batch_sender_loop, daemon=True)
         self.daemon_thread.start()
     
-    def send_measurement(self, topic, value, sensor_name, is_simulated=True):
+    def send_measurement(self, topic, value, sensor_name, device_name, is_simulated=True):
         """
         Queue a measurement for batch sending (non-blocking).
         
@@ -86,6 +87,7 @@ class MQTTBatchPublisher:
             "topic": topic,
             "value": value,
             "sensor_name": sensor_name,
+            "device_name": device_name,
             "simulated": is_simulated,
             "timestamp": time.time()
         }
@@ -134,6 +136,7 @@ class MQTTBatchPublisher:
             for message in batch:
                 payload = json.dumps({
                     "sensor": message["sensor_name"],
+                    "device": message["device_name"],
                     "value": message["value"],
                     "simulated": message["simulated"],
                     "timestamp": message["timestamp"]
@@ -171,7 +174,7 @@ def get_mqtt_publisher():
     return _mqtt_publisher
 
 
-def send_measurement(topic, value, sensor_name, is_simulated=True):
+def send_measurement(topic, value, sensor_name, device_name, is_simulated=True):
     """Send a measurement through the global MQTT publisher."""
     if _mqtt_publisher:
-        _mqtt_publisher.send_measurement(topic, value, sensor_name, is_simulated)
+        _mqtt_publisher.send_measurement(topic, value, sensor_name, device_name, is_simulated)
