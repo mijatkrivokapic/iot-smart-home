@@ -26,4 +26,11 @@ def run_dus(settings, threads, stop_event):
         dus_thread.start()
         threads.append(dus_thread)
     else:
-        pass # TODO: implement real sensor logic
+        from sensors.dus import run_dus_sensor
+        print("Starting DUS1 sensor")
+        dus_thread = threading.Thread(
+            target=run_dus_sensor, 
+            args=(2, dus_callback, stop_event, settings)
+        )
+        dus_thread.start()
+        threads.append(dus_thread)

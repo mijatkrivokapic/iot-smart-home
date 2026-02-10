@@ -16,6 +16,8 @@ try:
 except ImportError:
     pass
 
+# TODO: Iskoristiti postojece komponente za razlicite PIeve
+
 def menu():
     print("\n" + "="*35)
     print("     PI1 ACTUATOR CONTROL")
