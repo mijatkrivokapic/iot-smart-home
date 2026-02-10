@@ -1,22 +1,23 @@
-import threading
 import sys
+import threading
 import time
-from settings import load_settings
-from components.pir import run_pir
-from components.dus import run_dus
-from components.ds import run_ds
-from components.dms import run_dms
-from components.dl import toggle_light
+
 from components.db import toggle_buzzer
-from mqtt_publisher import init_mqtt_publisher, get_mqtt_publisher
+from components.dht import run_dht
+from components.dl import toggle_light
+from components.dms import run_dms
+from components.ds import run_ds
+from components.dus import run_dus
+from components.ir import run_ir
+from components.pir import run_pir
+from mqtt_publisher import get_mqtt_publisher, init_mqtt_publisher
+from settings import load_settings
 
 try:
     import RPi.GPIO as GPIO
     GPIO.setmode(GPIO.BCM)
 except ImportError:
     pass
-
-# TODO: Iskoristiti postojece komponente za razlicite PIeve
 
 def menu():
     print("\n" + "="*35)
@@ -53,6 +54,7 @@ if __name__ == "__main__":
     settings = load_settings()
     pi1_settings = settings['PI1']
     pi2_settings = settings['PI2']
+    pi3_settings = settings['PI3']
     mqtt_settings = settings.get('MQTT', {})
     
     threads = []
@@ -92,6 +94,20 @@ if __name__ == "__main__":
                     run_ds(pi2_settings['DS2'], threads, stop_event)
                     run_dus(pi2_settings['DUS2'], threads, stop_event)
                     run_pir(pi2_settings['DPIR2'], threads, stop_event)
+                    
+                if '--actuators' in args:
+                    run_actuators_logic(pi1_settings)
+                else:
+                    while True:
+                        time.sleep(1)
+            elif args[0] == '--3':
+                print("Running in PI3 mode")
+                if '--sensors' in args:
+                    print("Starting pi3 sensor monitoring...")
+                    run_dht(pi3_settings['DHT1'], threads, stop_event)
+                    run_dht(pi3_settings['DHT2'], threads, stop_event)
+                    run_ir(pi3_settings['IR'], threads, stop_event)
+                    run_pir(pi3_settings['DPIR3'], threads, stop_event)
                     
                 if '--actuators' in args:
                     run_actuators_logic(pi1_settings)
