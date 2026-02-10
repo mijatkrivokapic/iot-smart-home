@@ -26,4 +26,11 @@ def run_dms(settings, threads, stop_event):
         dms_thread.start()
         threads.append(dms_thread)
     else:
-        pass #TODO: implement real sensor logic
+        from sensors.dms import run_dms_sensor
+        print("Starting DMS sensor")
+        dms_thread = threading.Thread(
+            target=run_dms_sensor, 
+            args=(2, dms_callback, stop_event, settings)
+        )
+        dms_thread.start()
+        threads.append(dms_thread)
