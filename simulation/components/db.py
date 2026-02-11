@@ -11,7 +11,12 @@ def toggle_buzzer(settings, state):
         topic = settings['topic']
         send_measurement(topic, 1 if state else 0, "DB", settings['device'], is_simulated=settings['simulated'])
     else:
+        print("state: ", state)
         GPIO.setmode(GPIO.BCM)
         buzzer_pin = settings['pin']
         GPIO.setup(buzzer_pin, GPIO.OUT)
-        GPIO.output(buzzer_pin, True)
+        if state == 1:
+            GPIO.output(buzzer_pin, GPIO.HIGH)
+        else:
+            print("Turning off buzzer")
+            GPIO.output(buzzer_pin, GPIO.LOW)
