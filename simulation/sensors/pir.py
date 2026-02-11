@@ -10,15 +10,10 @@ def run_pir_sensor(delay, callback, stop_event, sensor_config=None):
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(PIR_PIN, GPIO.IN)
 
-    def motion_detected(channel):
-        callback(True, sensor_config)
-
-    def no_motion(channel):
-        callback(False, sensor_config)
-
-
-    GPIO.add_event_detect(PIR_PIN, GPIO.RISING, callback=motion_detected)
-    GPIO.add_event_detect(PIR_PIN, GPIO.FALLING, callback=no_motion)
+    def sensor_callback(channel):
+        state = GPIO.input(channel)
+        callback(True if state else False, sensor_config)
+    GPIO.add_event_detect(PIR_PIN, GPIO.BOTH, callback=sensor_callback)
 
     try:
         while not stop_event.is_set():
@@ -27,4 +22,4 @@ def run_pir_sensor(delay, callback, stop_event, sensor_config=None):
         print(f"Error: {e}")
     finally:
         GPIO.remove_event_detect(PIR_PIN)
-        GPIO.cleanup()
+        GPIO.cleanup(PIR_PIN)
