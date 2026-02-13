@@ -3,6 +3,7 @@ import time
 
 from mqtt_publisher import send_measurement
 from simulators.pir import run_pir_simulator
+from sensors.pir import run_pir_sensor
 
 
 def pir_callback(motion_detected, sensor_config):
@@ -26,4 +27,10 @@ def run_pir(settings, threads, stop_event):
         pir_thread.start()
         threads.append(pir_thread)
     else:
-        pass #TODO: implement real sensor logic
+        print("Starting DPIR1 sensor")
+        pir_thread = threading.Thread(
+            target=run_pir_sensor, 
+            args=(2, pir_callback, stop_event, settings)
+        )
+        pir_thread.start()
+        threads.append(pir_thread)

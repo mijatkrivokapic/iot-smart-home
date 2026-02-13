@@ -1,4 +1,8 @@
 from mqtt_publisher import send_measurement
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    pass
 
 
 def toggle_buzzer(settings, state):
@@ -7,4 +11,12 @@ def toggle_buzzer(settings, state):
         topic = settings['topic']
         send_measurement(topic, 1 if state else 0, "DB", settings['device'], is_simulated=settings['simulated'])
     else:
-        pass #TODO : implement real actuator logic
+        print("state: ", state)
+        GPIO.setmode(GPIO.BCM)
+        buzzer_pin = settings['pin']
+        GPIO.setup(buzzer_pin, GPIO.OUT)
+        if state == 1:
+            GPIO.output(buzzer_pin, GPIO.HIGH)
+        else:
+            print("Turning off buzzer")
+            GPIO.output(buzzer_pin, GPIO.LOW)

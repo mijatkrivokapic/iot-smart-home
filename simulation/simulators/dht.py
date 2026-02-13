@@ -15,10 +15,10 @@ def generate_values(initial_temp = 25, initial_humidity=20):
 
       
 
-def run_dht_simulator(delay, callback, stop_event):
+def run_dht_simulator(delay, callback, stop_event, settings):
         for h, t in generate_values():
             time.sleep(delay)
-            callback(h, t)
+            callback(h, t, "DHTLIB_OK", settings)
             if stop_event.is_set():
                   break
               

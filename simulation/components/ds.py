@@ -3,6 +3,7 @@ import time
 
 from mqtt_publisher import send_measurement
 from simulators.ds import run_ds_simulator
+from sensors.ds import run_ds_sensor
 
 
 def ds_callback(state, sensor_config):
@@ -27,4 +28,10 @@ def run_ds(settings, threads, stop_event):
         ds_thread.start()
         threads.append(ds_thread)
     else:
-        pass # TODO: implement real sensor logic
+        print("Starting DS1  sensor")
+        ds_thread = threading.Thread(
+            target=run_ds_sensor, 
+            args=(2, ds_callback, stop_event, settings)
+        )
+        ds_thread.start()
+        threads.append(ds_thread)
