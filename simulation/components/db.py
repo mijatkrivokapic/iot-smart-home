@@ -1,4 +1,4 @@
-from mqtt_publisher import send_measurement
+from mqtt_wrapper import send_measurement
 try:
     import RPi.GPIO as GPIO
 except ImportError:

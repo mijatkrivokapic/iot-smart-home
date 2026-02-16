@@ -1,7 +1,7 @@
 import threading
 import time
 
-from mqtt_publisher import send_measurement
+from mqtt_wrapper import send_measurement
 from simulators.ds import run_ds_simulator
 from sensors.ds import run_ds_sensor
 

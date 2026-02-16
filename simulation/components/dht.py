@@ -1,5 +1,5 @@
 from simulators.dht import run_dht_simulator
-from mqtt_publisher import send_measurement
+from mqtt_wrapper import send_measurement
 import threading
 import time
 
