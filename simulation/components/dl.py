@@ -1,5 +1,9 @@
-import RPi.GPIO as GPIO
-from mqtt_publisher import send_measurement
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    pass
+from mqtt_wrapper import send_measurement
+from settings import load_settings
 
 
 def toggle_light(settings, state):
@@ -13,3 +17,9 @@ def toggle_light(settings, state):
         GPIO.setup(settings['pin'], GPIO.OUT)
         GPIO.output(settings['pin'], state)
         send_measurement(settings['topic'], 1 if state else 0, "DL", settings['device'], is_simulated=settings['simulated'])
+
+def handle_dl(payload):
+    print(f"Handling DL command with payload: {payload}")
+    value = payload.get("action")
+    settings = load_settings()['PI1']['DL']
+    toggle_light(settings, value)
