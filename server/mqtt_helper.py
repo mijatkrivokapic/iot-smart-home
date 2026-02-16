@@ -23,7 +23,7 @@ def send_actuator_command(pi_id, actuator_id, action, value=None):
     Import this function in your automation rules (e.g., pir.py).
     """
     print("⚡ Sending command to actuator...")
-    topic = f"home/actuators/{actuator_id}"
+    topic = f"home/actuators/{pi_id}/{actuator_id}"
     payload = {
         "actuator": actuator_id,
         "action": action,

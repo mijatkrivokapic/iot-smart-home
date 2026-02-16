@@ -51,6 +51,8 @@ def run_actuators_logic(pi1_settings):
 if __name__ == "__main__":
     args = sys.argv[1:]
     print(args)
+    pi_ids = {'--1': 'PI1', '--2': 'PI2', '--3': 'PI3'}
+    pi_id = pi_ids.get(args[0], 'PI1') if args else 'PI1'
 
     settings = load_settings()
     pi1_settings = settings['PI1']
@@ -65,7 +67,7 @@ if __name__ == "__main__":
     mqtt_client = init_mqtt_client(
         broker=mqtt_settings.get('broker', 'localhost'),
         port=mqtt_settings.get('port', 1883),
-        command_topic='home/actuators/+',
+        command_topic=f'home/actuators/{pi_id}/+',
         command_callback=actuator_callback,
         batch_size=mqtt_settings.get('batch_size', 5),
         batch_timeout=mqtt_settings.get('batch_timeout', 5)
