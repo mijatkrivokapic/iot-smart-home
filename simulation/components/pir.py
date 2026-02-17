@@ -1,7 +1,7 @@
 import threading
 import time
 
-from mqtt_publisher import send_measurement
+from mqtt_wrapper import send_measurement
 from simulators.pir import run_pir_simulator
 from sensors.pir import run_pir_sensor
 

@@ -1,7 +1,7 @@
 import threading
 import time
 
-from mqtt_publisher import send_measurement
+from mqtt_wrapper import send_measurement
 
 
 def ir_callback(button_name, sensor_config):

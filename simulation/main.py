@@ -10,7 +10,8 @@ from components.ds import run_ds
 from components.dus import run_dus
 from components.ir import run_ir
 from components.pir import run_pir
-from mqtt_publisher import get_mqtt_publisher, init_mqtt_publisher
+from components.actuator_callback import actuator_callback
+from mqtt_wrapper import init_mqtt_client, get_mqtt_client
 from settings import load_settings
 
 try:
@@ -50,6 +51,8 @@ def run_actuators_logic(pi1_settings):
 if __name__ == "__main__":
     args = sys.argv[1:]
     print(args)
+    pi_ids = {'--1': 'PI1', '--2': 'PI2', '--3': 'PI3'}
+    pi_id = pi_ids.get(args[0], 'PI1') if args else 'PI1'
 
     settings = load_settings()
     pi1_settings = settings['PI1']
@@ -60,14 +63,16 @@ if __name__ == "__main__":
     threads = []
     stop_event = threading.Event()
     
-    # Initialize MQTT Publisher
-    mqtt_publisher = init_mqtt_publisher(
+    # Initialize MQTT Client
+    mqtt_client = init_mqtt_client(
         broker=mqtt_settings.get('broker', 'localhost'),
         port=mqtt_settings.get('port', 1883),
+        command_topic=f'home/actuators/{pi_id}/+',
+        command_callback=actuator_callback,
         batch_size=mqtt_settings.get('batch_size', 5),
         batch_timeout=mqtt_settings.get('batch_timeout', 5)
     )
-    print("MQTT Publisher initialized")
+    print("MQTT Client initialized")
 
     if not args or ( '--sensors' not in args and '--actuators' not in args):
         print("Please specify --sensors, --actuators, or both.")
@@ -122,9 +127,9 @@ if __name__ == "__main__":
             for t in threads:
                 t.join(timeout=1)
             
-            mqtt_pub = get_mqtt_publisher()
-            if mqtt_pub:
-                mqtt_pub.stop()
+            mqtt_client = get_mqtt_client()
+            if mqtt_client:
+                mqtt_client.stop()
             
             try:
                 GPIO.cleanup()

@@ -7,6 +7,8 @@ import paho.mqtt.client as mqtt
 from flask import Flask, jsonify, request
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
+from automation_rules.automation_rules import process_automation_rules
+from mqtt_helper import mqtt_client, init_mqtt, send_actuator_command
 
 app = Flask(__name__)
 
@@ -20,12 +22,11 @@ INFLUXDB_CONFIG = {
 MQTT_CONFIG = {
     "broker": "localhost",
     "port": 1883,
-    "topics": ["home/+"]  # Subscribe to all home/* topics
+    "topics": ["home/sensors/+"]  # Subscribe to all home/sensors/* topics
 }
 
 # Global state
 influxdb_client = None
-mqtt_client = None
 message_queue = Queue(maxsize=1000)
 stop_event = threading.Event()
 
@@ -43,24 +44,6 @@ def init_influxdb():
         return True
     except Exception as e:
         print(f"✗ InfluxDB connection error: {e}")
-        return False
-
-
-def init_mqtt():
-    """Initialize MQTT client."""
-    global mqtt_client
-    mqtt_client = mqtt.Client()
-    mqtt_client.on_connect = on_mqtt_connect
-    mqtt_client.on_message = on_mqtt_message
-    mqtt_client.on_disconnect = on_mqtt_disconnect
-    
-    try:
-        mqtt_client.connect(MQTT_CONFIG["broker"], MQTT_CONFIG["port"], keepalive=60)
-        mqtt_client.loop_start()
-        print("✓ MQTT client initialized")
-        return True
-    except Exception as e:
-        print(f"✗ MQTT connection error: {e}")
         return False
 
 
@@ -154,10 +137,13 @@ def database_writer_loop():
     
     while not stop_event.is_set():
         try:
-            # Process messages with short timeout
             if not message_queue.empty():
                 message_data = message_queue.get(timeout=0.1)
+                
                 write_to_influxdb(message_data["topic"], message_data["payload"])
+                
+                process_automation_rules(message_data["payload"])
+                
             else:
                 time.sleep(0.1)
                 
@@ -179,7 +165,13 @@ if __name__ == '__main__':
     if not init_influxdb():
         print("⚠ Warning: InfluxDB initialization failed, but continuing...")
     
-    if not init_mqtt():
+    # Setup MQTT Callbacks BEFORE connecting
+    mqtt_client.on_connect = on_mqtt_connect
+    mqtt_client.on_message = on_mqtt_message
+    mqtt_client.on_disconnect = on_mqtt_disconnect
+
+    # Initialize MQTT Connection (using helper function)
+    if not init_mqtt(MQTT_CONFIG["broker"], MQTT_CONFIG["port"]):
         print("⚠ Warning: MQTT initialization failed, but continuing...")
     
     # Start database writer daemon thread

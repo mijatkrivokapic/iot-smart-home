@@ -1,7 +1,7 @@
 import threading
 import time
 
-from mqtt_publisher import send_measurement
+from mqtt_wrapper import send_measurement
 from sensors.gyro.gyro import run_gyro_sensor
 from simulators.gyro import run_gyro_simulator
 
