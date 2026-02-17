@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { WebsocketMessage } from '../../models/sensor-data';
 import { RouterLinkWithHref } from '@angular/router';
 import {MatCardModule} from '@angular/material/card';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-dashboard-component',
-  imports: [CommonModule, RouterLinkWithHref, MatCardModule],
+  imports: [CommonModule, RouterLinkWithHref, MatCardModule, MatButton],
   templateUrl: './dashboard-component.html',
   styleUrl: './dashboard-component.scss',
 })
