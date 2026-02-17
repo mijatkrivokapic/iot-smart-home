@@ -1,0 +1,5 @@
+<h1>Sensor Data</h1>
+
+<div *ngFor="let s of sensors">
+    {{ s.topic }}: {{ s.payload | json }}
+</div>
