@@ -9,6 +9,6 @@ export class SensorService {
   constructor(private socket: Socket) {}
 
   onSensorUpdate(): Observable<any> {
-    return this.socket.fromEvent('sensor_update');
+    return this.socket.fromEvent('sensor-data');
   }
 }
