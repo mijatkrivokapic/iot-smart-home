@@ -11,10 +11,10 @@ from flask_socketio import SocketIO
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
 from mqtt_helper import init_mqtt, mqtt_client, send_actuator_command
+import socketio_helper
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
 
 INFLUXDB_CONFIG = {
     "url": "http://localhost:8086",
@@ -81,7 +81,7 @@ def on_mqtt_message(client, userdata, msg):
             "timestamp": time.time()
         }
 
-        socketio.emit(f"sensor-data-{payload.get('device', 'Unknown')}", message_data) #, broadcast=True)
+        socketio_helper.socketio.emit(f"sensor-data-{payload.get('device', 'Unknown')}", message_data) #, broadcast=True)
         
         # Non-blocking queue put with timeout
         try:
@@ -188,7 +188,8 @@ if __name__ == '__main__':
         print("\n" + "="*50)
         print("Starting Flask server on http://localhost:5000")
         print("="*50)
-        socketio.run(app, host='0.0.0.0', port=5000)
+        socketio_helper.init_socketio(app)
+        socketio_helper.socketio.run(app, host='0.0.0.0', port=5000)
         
     except KeyboardInterrupt:
         print("\nShutting down...")
