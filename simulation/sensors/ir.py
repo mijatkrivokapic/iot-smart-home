@@ -73,21 +73,19 @@ def convertHex(binaryValue):
 	return hex(tmpB2)
 
 def run_ir_sensor(delay, callback, stop_event, sensor_config=None):
-	global pin
-	pin = sensor_config['pin']
+    global pin
+    pin = sensor_config['pin']
 
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(pin, GPIO.IN)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(pin, GPIO.IN)
 
-    # TODO: Uncomment - Indendation error?
-
-    # while not stop_event.is_set():
-    #     try:
-    #         binary_value = getBinary()
-    #         hex_value = convertHex(binary_value)
-    #         for button in range(len(Buttons)):#Runs through every value in list
-    #             if hex(Buttons[button]) == hex_value: #Checks this against incoming
-    #                 callback(ButtonsNames[button], sensor_config)
-    #     except Exception as e:
-    #         print(f"Error: {e}")
-    #     time.sleep(delay)
+    while not stop_event.is_set():
+        try:
+            binary_value = getBinary()
+            hex_value = convertHex(binary_value)
+            for button in range(len(Buttons)):  # Runs through every value in list
+                if hex(Buttons[button]) == hex_value:  # Checks this against incoming
+                    callback(ButtonsNames[button], sensor_config)
+        except Exception as e:
+            print(f"Error: {e}")
+        time.sleep(delay)
