@@ -17,15 +17,14 @@ def ir_callback(button_name, sensor_config):
 
 def run_ir(settings, threads, stop_event):
     if settings['simulated']:
-        # print("Starting IR simulator")
-        # from simulators.ir import run_ir_simulator
-        # ir_thread = threading.Thread(
-        #     target=run_ir_simulator,
-        #     args=(2, stop_event, settings)
-        # )
-        # ir_thread.start()
-        # threads.append(ir_thread)
-        pass
+        from simulators.ir import run_ir_simulator
+        print("Starting IR simulator")
+        ir_thread = threading.Thread(
+            target=run_ir_simulator,
+            args=(2, ir_callback, stop_event, settings)
+        )
+        ir_thread.start()
+        threads.append(ir_thread)
     else:
         from sensors.ir import run_ir_sensor
         print("Starting IR sensor")
