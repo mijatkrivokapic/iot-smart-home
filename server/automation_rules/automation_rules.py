@@ -1,7 +1,10 @@
 from automation_rules.pir import handle_dpir1
 
+from .ir import handle_ir
+
 SENSOR_RULES = {
-    "DPIR1": handle_dpir1
+    "DPIR1": handle_dpir1,
+    "IR": handle_ir
 }
 
 def process_automation_rules(payload):
