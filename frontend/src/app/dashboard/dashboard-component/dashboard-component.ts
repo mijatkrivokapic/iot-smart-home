@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.sensorService.onSensorUpdate().subscribe((data) => {
+    this.sensorService.onPi1SensorUpdate().subscribe((data) => {
       this.sensors.push(data);
     });
   }
