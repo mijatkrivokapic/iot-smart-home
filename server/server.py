@@ -81,7 +81,7 @@ def on_mqtt_message(client, userdata, msg):
             "timestamp": time.time()
         }
 
-        socketio.emit("sensor-data", message_data) #, broadcast=True)
+        socketio.emit(f"sensor-data-{payload.get('device', 'Unknown')}", message_data) #, broadcast=True)
         
         # Non-blocking queue put with timeout
         try:
