@@ -1,7 +1,9 @@
 from components.dl import handle_dl
+from components.db import handle_db
 
 ACTUATOR_RULES = {
-    "DL": handle_dl
+    "DL": handle_dl,
+    "DB": handle_db
 }
 
 def actuator_callback(payload):

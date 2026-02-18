@@ -11,16 +11,15 @@ def ds_callback(state, sensor_config):
     status = "PRESSED (Open)" if state == 1 else "RELEASED (Closed)"
     print("="*20)
     print(f"Timestamp: {time.strftime('%H:%M:%S', t)}")
-    print(f"Sensor: DS1 (Door Sensor)")
+    print(f"Sensor: {sensor_config['component']} ({sensor_config['device']} Door Sensor)")
     print(f"State: {status}")
     
     # Send measurement to MQTT
     topic = sensor_config.get('topic', 'home/door_sensor')
-    send_measurement(topic, state, "DS1", sensor_config['device'], is_simulated=sensor_config['simulated'])
+    send_measurement(topic, state, sensor_config['component'], sensor_config['device'], is_simulated=sensor_config['simulated'])
 
 def run_ds(settings, threads, stop_event):
     if settings['simulated']:
-        print("Starting DS1 simulator")
         ds_thread = threading.Thread(
             target=run_ds_simulator, 
             args=(2, ds_callback, stop_event, settings)
@@ -28,7 +27,6 @@ def run_ds(settings, threads, stop_event):
         ds_thread.start()
         threads.append(ds_thread)
     else:
-        print("Starting DS1  sensor")
         ds_thread = threading.Thread(
             target=run_ds_sensor, 
             args=(2, ds_callback, stop_event, settings)

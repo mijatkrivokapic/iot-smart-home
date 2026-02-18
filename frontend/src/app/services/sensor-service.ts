@@ -8,7 +8,11 @@ import { Observable } from 'rxjs';
 export class SensorService {
   constructor(private socket: Socket) {}
 
-  onSensorUpdate(): Observable<any> {
-    return this.socket.fromEvent('sensor-data');
+  onPi1SensorUpdate(): Observable<any> {
+    return this.socket.fromEvent('sensor-data-PI1');
+  }
+
+  onPi2SensorUpdate(): Observable<any> {
+    return this.socket.fromEvent('sensor-data-PI2');
   }
 }

@@ -1,7 +1,7 @@
 <h1>Dashboards</h1>
 
 <hr />
-
+<h2>Alarm state: {{state==null ? 'UNKNOWN' : state?.alarm_status}}</h2>
 <div class="dashboard-list">
   <mat-card class="dashboard-card">
     <mat-card-header>
@@ -23,7 +23,7 @@
       <p>Live sensor data from Raspberry Pi 2.</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary">View</button>
+      <button mat-raised-button color="primary" routerLink="/pi2-dashboard">View</button>
     </mat-card-actions>
   </mat-card>
 
