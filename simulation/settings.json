@@ -16,7 +16,8 @@
         "DHT1": { "device": "PI3", "simulated": true, "pin": 4, "topic": "home/sensors/temperature_humidity" },
         "DHT2": { "device": "PI3", "simulated": true, "pin": 17, "topic": "home/sensors/temperature_humidity" },
         "IR": { "device": "PI3", "simulated": true, "pin": 27, "topic": "home/sensors/ir_sensor" },
-        "DPIR3": { "device":"PI3", "simulated": true, "pin": 16, "topic": "home/sensors/motion" }
+        "DPIR3": { "device":"PI3", "simulated": true, "pin": 16, "topic": "home/sensors/motion" },
+        "BRGB": { "device": "PI3", "simulated": true, "pins": {"r": 5, "g": 6, "b": 13}, "topic": "home/actuators/rgb_led" }
     },
     "MQTT": {
         "broker": "localhost",

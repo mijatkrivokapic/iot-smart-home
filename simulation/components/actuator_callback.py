@@ -1,7 +1,9 @@
-from components.dl import handle_dl
+from .dl import handle_dl
+from .rgb import handle_rgb
 
 ACTUATOR_RULES = {
-    "DL": handle_dl
+    "DL": handle_dl,
+    "BRGB": handle_rgb
 }
 
 def actuator_callback(payload):

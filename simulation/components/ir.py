@@ -9,9 +9,8 @@ def ir_callback(button_name, sensor_config):
     print("="*20)
     print(f"Timestamp: {time.strftime('%H:%M:%S', t)}")
     print(f"Sensor: IR (Infrared)")
-    print(f"Button: {button_name:.2f}")
+    print(f"Button: {button_name}")
 
-    # Send measurement to MQTT
     topic = sensor_config.get('topic', 'home/ir')
     send_measurement(topic, button_name, "IR", sensor_config['device'], is_simulated=sensor_config['simulated'])
 
