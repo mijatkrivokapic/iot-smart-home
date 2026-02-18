@@ -1,4 +1,5 @@
 from mqtt_wrapper import send_measurement
+from settings import load_settings
 try:
     import RPi.GPIO as GPIO
 except ImportError:
@@ -20,3 +21,9 @@ def toggle_buzzer(settings, state):
         else:
             print("Turning off buzzer")
             GPIO.output(buzzer_pin, GPIO.LOW)
+
+def handle_db(payload):
+    print(f"Handling DB command with payload: {payload}")
+    action = payload.get("action")
+    settings = load_settings()['PI1']['DB']
+    toggle_buzzer(settings, action)
