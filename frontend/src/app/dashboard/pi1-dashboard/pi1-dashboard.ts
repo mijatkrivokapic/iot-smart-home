@@ -18,7 +18,7 @@ export class Pi1Dashboard implements OnInit {
   constructor(private sensorService: SensorService) {}
 
   ngOnInit(): void {
-    this.sensorService.onSensorUpdate().subscribe((data: WebsocketMessage) => {
+    this.sensorService.onPi1SensorUpdate().subscribe((data: WebsocketMessage) => {
       this.sensorData[data.payload.sensor] = data.payload;
     })
   }
