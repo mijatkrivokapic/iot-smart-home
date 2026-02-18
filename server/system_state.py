@@ -2,6 +2,7 @@ import threading
 import time
 import socketio
 from mqtt_helper import send_actuator_command
+import socketio_helper
 
 class SystemState:
     def __init__(self):
@@ -28,7 +29,7 @@ class SystemState:
                 send_actuator_command("PI1","DB",0,None)
                 print("🛑 Command Sent: BUZZER OFF")
 
-            #socketio.emit("state-update", self._state)
+            socketio_helper.socketio.emit("state-update", self._state)
 
     def get(self, key):
         with self._lock:
