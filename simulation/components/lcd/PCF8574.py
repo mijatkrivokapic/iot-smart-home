@@ -1,5 +1,12 @@
-import smbus
 import time
+
+# sudo apt install python3-smbus
+try:
+	import smbus
+except ModuleNotFoundError:
+	pass
+
+
 class PCF8574_I2C(object):
 	OUPUT = 0
 	INPUT = 1
@@ -20,7 +27,7 @@ class PCF8574_I2C(object):
 		self.bus.write_byte(self.address,value)
 
 	def digitalRead(self,pin):#Read PCF8574 one port of the data
-		value = readByte()	
+		value = self.readByte()	
 		return (value&(1<<pin)==(1<<pin)) and 1 or 0
 		
 	def digitalWrite(self,pin,newvalue):#Write data to PCF8574 one port

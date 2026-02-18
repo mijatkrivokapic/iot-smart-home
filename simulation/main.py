@@ -2,6 +2,7 @@ import sys
 import threading
 import time
 
+from components.actuator_callback import actuator_callback
 from components.db import toggle_buzzer
 from components.dht import run_dht
 from components.dl import toggle_light
@@ -9,9 +10,9 @@ from components.dms import run_dms
 from components.ds import run_ds
 from components.dus import run_dus
 from components.ir import run_ir
+from components.lcd.lcd import run_lcd
 from components.pir import run_pir
-from components.actuator_callback import actuator_callback
-from mqtt_wrapper import init_mqtt_client, get_mqtt_client
+from mqtt_wrapper import get_mqtt_client, init_mqtt_client
 from settings import load_settings
 
 try:
@@ -82,10 +83,10 @@ if __name__ == "__main__":
                 print("Running in PI1 mode")
                 if '--sensors' in args:
                     print("Starting pi1 sensor monitoring...")
-                    run_ds(pi1_settings['DS1'], threads, stop_event)
+                    # run_ds(pi1_settings['DS1'], threads, stop_event)
                     run_dus(pi1_settings['DUS1'], threads, stop_event)
                     run_pir(pi1_settings['DPIR1'], threads, stop_event)
-                    run_dms(pi1_settings['DMS'], threads, stop_event)
+                    # run_dms(pi1_settings['DMS'], threads, stop_event)
 
                 if '--actuators' in args:
                     run_actuators_logic(pi1_settings)
@@ -113,6 +114,7 @@ if __name__ == "__main__":
                     run_dht(pi3_settings['DHT2'], threads, stop_event)
                     run_ir(pi3_settings['IR'], threads, stop_event)
                     run_pir(pi3_settings['DPIR3'], threads, stop_event)
+                    run_lcd(pi3_settings['LCD'], threads, stop_event)
                     
                 if '--actuators' in args:
                     run_actuators_logic(pi1_settings)
