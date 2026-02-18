@@ -10,7 +10,7 @@ def toggle_buzzer(settings, state):
     if settings['simulated']:
         print(f"SIMULATOR: Door Buzzer is now {'ON' if state else 'OFF'}")
         topic = settings['topic']
-        send_measurement(topic, 1 if state else 0, "DB", settings['device'], is_simulated=settings['simulated'])
+        send_measurement(topic, 1 if state else 0, settings['component'], settings['device'], is_simulated=settings['simulated'])
     else:
         print("state: ", state)
         GPIO.setmode(GPIO.BCM)
