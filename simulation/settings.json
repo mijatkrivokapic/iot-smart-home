@@ -13,11 +13,12 @@
         "DPIR2": { "device":"PI2", "simulated": true, "pin": 16, "topic": "home/sensors/motion" }
     },
     "PI3": {
-        "DHT1": { "device": "PI3", "simulated": true, "pin": 4, "topic": "home/sensors/temperature_humidity" },
-        "DHT2": { "device": "PI3", "simulated": true, "pin": 17, "topic": "home/sensors/temperature_humidity" },
+        "DHT1": { "device": "PI3", "sensor": "DHT1", "simulated": true, "pin": 4, "topic": "home/sensors/temperature_humidity" },
+        "DHT2": { "device": "PI3", "sensor": "DHT2", "simulated": true, "pin": 17, "topic": "home/sensors/temperature_humidity" },
         "IR": { "device": "PI3", "simulated": true, "pin": 27, "topic": "home/sensors/ir_sensor" },
         "DPIR3": { "device":"PI3", "simulated": true, "pin": 16, "topic": "home/sensors/motion" },
-        "BRGB": { "device": "PI3", "simulated": true, "pins": {"r": 5, "g": 6, "b": 13}, "topic": "home/actuators/rgb_led" }
+        "BRGB": { "device": "PI3", "simulated": true, "pins": {"r": 5, "g": 6, "b": 13}, "topic": "home/actuators/rgb_led" },
+        "LCD": { "device": "PI3", "simulated": true, "pins": {"rs": 7, "e": 8, "db": [25, 24, 23, 18]}, "topic": "home/actuators/lcd_display" }
     },
     "MQTT": {
         "broker": "localhost",
