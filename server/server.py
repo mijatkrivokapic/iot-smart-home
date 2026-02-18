@@ -4,13 +4,17 @@ import time
 from queue import Queue
 
 import paho.mqtt.client as mqtt
+from automation_rules.automation_rules import process_automation_rules
 from flask import Flask, jsonify, request
+from flask_cors import CORS
+from flask_socketio import SocketIO
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
-from automation_rules.automation_rules import process_automation_rules
-from mqtt_helper import mqtt_client, init_mqtt, send_actuator_command
+from mqtt_helper import init_mqtt, mqtt_client, send_actuator_command
 
 app = Flask(__name__)
+CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 INFLUXDB_CONFIG = {
     "url": "http://localhost:8086",
@@ -76,6 +80,8 @@ def on_mqtt_message(client, userdata, msg):
             "payload": payload,
             "timestamp": time.time()
         }
+
+        socketio.emit("sensor-data", message_data) #, broadcast=True)
         
         # Non-blocking queue put with timeout
         try:
@@ -182,7 +188,7 @@ if __name__ == '__main__':
         print("\n" + "="*50)
         print("Starting Flask server on http://localhost:5000")
         print("="*50)
-        app.run(debug=False, host='0.0.0.0', port=5000)
+        socketio.run(app, host='0.0.0.0', port=5000)
         
     except KeyboardInterrupt:
         print("\nShutting down...")
