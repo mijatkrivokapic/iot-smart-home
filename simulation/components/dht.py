@@ -1,7 +1,9 @@
-from simulators.dht import run_dht_simulator
-from mqtt_wrapper import send_measurement
 import threading
 import time
+
+from mqtt_wrapper import send_measurement
+from simulators.dht import run_dht_simulator
+
 
 def dht_callback(humidity, temperature, code, sensor_config):
     t = time.localtime()
@@ -12,8 +14,9 @@ def dht_callback(humidity, temperature, code, sensor_config):
     print(f"Temperature: {temperature}°C")
 
     topic = sensor_config.get('topic', 'home/dht')
-    send_measurement(topic, humidity, "DHT1_Humidity", sensor_config['device'], is_simulated=sensor_config['simulated'])
-    send_measurement(topic, temperature, "DHT1_Temperature", sensor_config['device'], is_simulated=sensor_config['simulated'])
+    send_measurement(topic, {'humidity': humidity, 'temperature': temperature}, sensor_config['sensor'], sensor_config['device'], is_simulated=sensor_config['simulated'])
+    # send_measurement(topic, humidity, "DHT1_Humidity", sensor_config['device'], is_simulated=sensor_config['simulated'])
+    # send_measurement(topic, temperature, "DHT1_Temperature", sensor_config['device'], is_simulated=sensor_config['simulated'])
 
 
 
@@ -25,7 +28,7 @@ def run_dht(settings, threads, stop_event):
             threads.append(dht1_thread)
             print("Dht1 sumilator started")
         else:
-            from sensors.dht import run_dht_loop, DHT
+            from sensors.dht import DHT, run_dht_loop
             print("Starting dht1 loop")
             dht = DHT(settings['pin'])
             dht1_thread = threading.Thread(target=run_dht_loop, args=(dht, 2, dht_callback, stop_event, settings))
