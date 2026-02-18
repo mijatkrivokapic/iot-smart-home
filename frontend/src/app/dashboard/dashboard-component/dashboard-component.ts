@@ -29,7 +29,10 @@ export class DashboardComponent implements OnInit {
 
     this.systemStateService.onStateUpdate().subscribe((data) => {
       this.state = data;
-      console.log(data);
+    });
+
+    this.systemStateService.getCurrentState().subscribe((data) => {
+      this.state = data;
     });
 
   }

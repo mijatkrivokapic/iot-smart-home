@@ -12,6 +12,7 @@ from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
 from mqtt_helper import init_mqtt, mqtt_client, send_actuator_command
 import socketio_helper
+from system_state import state
 
 app = Flask(__name__)
 CORS(app)
@@ -164,6 +165,14 @@ def start_database_writer():
     writer_thread = threading.Thread(target=database_writer_loop, daemon=True)
     writer_thread.start()
     return writer_thread
+
+@app.route('/api/state', methods=['GET'])
+def get_system_state():
+    try:
+        current_state = state.get_all()
+        return jsonify(current_state), 200
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 
 if __name__ == '__main__':
