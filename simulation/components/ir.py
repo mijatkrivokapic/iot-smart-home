@@ -8,11 +8,11 @@ def ir_callback(button_name, sensor_config):
     t = time.localtime()
     print("="*20)
     print(f"Timestamp: {time.strftime('%H:%M:%S', t)}")
-    print(f"Sensor: IR (Infrared)")
+    print(f"Sensor: {sensor_config['component']}")
     print(f"Button: {button_name}")
 
     topic = sensor_config.get('topic', 'home/ir')
-    send_measurement(topic, button_name, "IR", sensor_config['device'], is_simulated=sensor_config['simulated'])
+    send_measurement(topic, button_name, sensor_config['component'], sensor_config['device'], is_simulated=sensor_config['simulated'])
 
 def run_ir(settings, threads, stop_event):
     if settings['simulated']:

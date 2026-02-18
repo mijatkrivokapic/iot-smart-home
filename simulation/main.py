@@ -9,6 +9,7 @@ from components.dl import toggle_light
 from components.dms import run_dms
 from components.ds import run_ds
 from components.dus import run_dus
+from components.gyro import run_gyro
 from components.ir import run_ir
 from components.lcd.lcd import run_lcd
 from components.pir import run_pir
@@ -100,12 +101,17 @@ if __name__ == "__main__":
                     run_ds(pi2_settings['DS2'], threads, stop_event)
                     run_dus(pi2_settings['DUS2'], threads, stop_event)
                     run_pir(pi2_settings['DPIR2'], threads, stop_event)
+                    run_ds(pi2_settings['BTN'], threads, stop_event)
+                    run_dht(pi2_settings['DHT3'], threads, stop_event)
+                    run_gyro(pi2_settings['GSG'], threads, stop_event)
                     
                 if '--actuators' in args:
                     run_actuators_logic(pi1_settings)
                 else:
                     while True:
                         time.sleep(1)
+
+            
             elif args[0] == '--3':
                 print("Running in PI3 mode")
                 if '--sensors' in args:

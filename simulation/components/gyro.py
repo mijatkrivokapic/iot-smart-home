@@ -2,7 +2,10 @@ import threading
 import time
 
 from mqtt_wrapper import send_measurement
-from sensors.gyro.gyro import run_gyro_sensor
+try:
+    from sensors.gyro.gyro import run_gyro_sensor
+except ImportError:
+    pass
 from simulators.gyro import run_gyro_simulator
 
 
@@ -10,11 +13,11 @@ def gyro_callback(accel, gyro, sensor_config):
     t = time.localtime()
     print("="*20)
     print(f"Timestamp: {time.strftime('%H:%M:%S', t)}")
-    print(f"Sensor: Gyro")
+    print(f"Sensor: {sensor_config['component']}")
  
     topic = sensor_config.get('topic', 'home/gyro')
-    send_measurement(topic, accel, "Gyro_Accel", sensor_config['device'], is_simulated=sensor_config['simulated'])
-    send_measurement(topic, gyro, "Gyro_Gyro", sensor_config['device'], is_simulated=sensor_config['simulated'])
+    send_measurement(topic, accel, f"{sensor_config['component']}_Accel", sensor_config['device'], is_simulated=sensor_config['simulated'])
+    send_measurement(topic, gyro, f"{sensor_config['component']}_Gyro", sensor_config['device'], is_simulated=sensor_config['simulated'])
 
 def run_gyro(settings, threads, stop_event):
     if settings['simulated']:

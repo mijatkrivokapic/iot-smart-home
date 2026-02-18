@@ -11,15 +11,16 @@ def pir_callback(motion_detected, sensor_config):
     print("="*20)
     print(f"Timestamp: {time.strftime('%H:%M:%S', t)}")
     if motion_detected:
-        print(f"Sensor: DPIR1 (Motion Detected!)")
-    
-    # Send measurement to MQTT (1 for motion, 0 for no motion)
+        print(f"Sensor: {sensor_config['component']} (Motion Detected!)")
+    else:
+        print(f"Sensor: {sensor_config['component']} (No Motion)")
+        
     topic = sensor_config.get('topic', 'home/motion')
-    send_measurement(topic, 1 if motion_detected else 0, "DPIR1", sensor_config['device'], is_simulated=sensor_config['simulated'])
+    send_measurement(topic, 1 if motion_detected else 0, sensor_config['component'], sensor_config['device'], is_simulated=sensor_config['simulated'])
 
 def run_pir(settings, threads, stop_event):
     if settings['simulated']:
-        print("Starting DPIR1 simulator")
+        print(f"Starting {settings['component']} simulator")
         pir_thread = threading.Thread(
             target=run_pir_simulator, 
             args=(2, pir_callback, stop_event, settings)
@@ -27,7 +28,7 @@ def run_pir(settings, threads, stop_event):
         pir_thread.start()
         threads.append(pir_thread)
     else:
-        print("Starting DPIR1 sensor")
+        print(f"Starting {settings['component']} sensor")
         pir_thread = threading.Thread(
             target=run_pir_sensor, 
             args=(2, pir_callback, stop_event, settings)

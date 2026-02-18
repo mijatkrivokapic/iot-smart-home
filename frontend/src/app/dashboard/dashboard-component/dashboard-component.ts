@@ -5,22 +5,35 @@ import { WebsocketMessage } from '../../models/sensor-data';
 import { RouterLinkWithHref } from '@angular/router';
 import {MatCardModule} from '@angular/material/card';
 import {MatButton} from '@angular/material/button';
+import {SystemStateService} from '../../services/system-state-service';
 
 @Component({
   selector: 'app-dashboard-component',
   imports: [CommonModule, RouterLinkWithHref, MatCardModule, MatButton],
   templateUrl: './dashboard-component.html',
   styleUrl: './dashboard-component.scss',
+  standalone: true
 })
 export class DashboardComponent implements OnInit {
   sensors: WebsocketMessage[] = [];
+  state:any = null;
 
-  constructor(private sensorService: SensorService) {}
+  constructor(private sensorService: SensorService,
+              private systemStateService: SystemStateService) {}
 
 
   ngOnInit(): void {
-    this.sensorService.onSensorUpdate().subscribe((data) => {
+    this.sensorService.onPi1SensorUpdate().subscribe((data) => {
       this.sensors.push(data);
     });
+
+    this.systemStateService.onStateUpdate().subscribe((data) => {
+      this.state = data;
+    });
+
+    this.systemStateService.getCurrentState().subscribe((data) => {
+      this.state = data;
+    });
+
   }
 }
