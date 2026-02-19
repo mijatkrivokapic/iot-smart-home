@@ -40,8 +40,9 @@ def lcd_display_loop(delay, stop_event, settings):
                     exit(1)
             # Create LCD, passing in MCP GPIO adapter.
             lcd = Adafruit_CharLCD(settings['pins']['rs'], settings['pins']['e'], settings['pins']['db'], mcp)
-            lcd.begin(16, 2)
+            
             mcp.output(3, 1)  # Turn on LCD backlight
+            lcd.begin(16, 2)
 
             if not data_copy:
                 lcd.setCursor(0, 0)
@@ -51,7 +52,7 @@ def lcd_display_loop(delay, stop_event, settings):
                 time.sleep(delay)
             else:
                 for sensor, data in data_copy.items():
-                    lcd.clear()
+                    #lcd.clear()
                     lcd.setCursor(0, 0)
                     lcd.message(f"{sensor}")
                     lcd.setCursor(0, 1)
