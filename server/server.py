@@ -188,7 +188,31 @@ def get_system_state():
         return jsonify(current_state), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+    
 
+@app.route('/api/timer/start', methods=['POST'])
+def start_timer():
+    data = request.get_json()
+
+    timer_seconds = data.get("time")
+
+    send_actuator_command("PI2","4SD","start_timer",timer_seconds)
+    
+    return jsonify({
+        "status": "success"
+    }), 200
+
+@app.route('/api/timer/config', methods=['PUT'])
+def start_timer():
+    data = request.get_json()
+
+    timer_seconds = data.get("time")
+
+    state.set("4SD_timer", timer_seconds)
+    
+    return jsonify({
+        "status": "success"
+    }), 200
 
 if __name__ == '__main__':
     # Initialize connections
