@@ -84,10 +84,10 @@ if __name__ == "__main__":
                 print("Running in PI1 mode")
                 if '--sensors' in args:
                     print("Starting pi1 sensor monitoring...")
-                    # run_ds(pi1_settings['DS1'], threads, stop_event)
+                    run_ds(pi1_settings['DS1'], threads, stop_event)
                     run_dus(pi1_settings['DUS1'], threads, stop_event)
                     run_pir(pi1_settings['DPIR1'], threads, stop_event)
-                    # run_dms(pi1_settings['DMS'], threads, stop_event)
+                    run_dms(pi1_settings['DMS'], threads, stop_event)
 
                 if '--actuators' in args:
                     run_actuators_logic(pi1_settings)
@@ -106,7 +106,7 @@ if __name__ == "__main__":
                     run_gyro(pi2_settings['GSG'], threads, stop_event)
                     
                 if '--actuators' in args:
-                    run_actuators_logic(pi1_settings)
+                    run_actuators_logic(pi2_settings)
                 else:
                     while True:
                         time.sleep(1)
@@ -123,7 +123,7 @@ if __name__ == "__main__":
                     run_lcd(pi3_settings['LCD'], threads, stop_event)
                     
                 if '--actuators' in args:
-                    run_actuators_logic(pi1_settings)
+                    run_actuators_logic(pi3_settings)
                 else:
                     while True:
                         time.sleep(1)
