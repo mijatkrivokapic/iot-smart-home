@@ -1,6 +1,8 @@
+from .btn import handle_btn
 from .dht import handle_dht
 from .dms import handle_dms
 from .ds1 import handle_ds1
+from .gyro import handle_accel, handle_gyro
 from .ir import handle_ir
 from .pir import handle_dpir1
 
@@ -10,7 +12,10 @@ SENSOR_RULES = {
     "DHT1": handle_dht,
     "DHT2": handle_dht,
     "DS1": handle_ds1,
-    "DMS": handle_dms
+    "DMS": handle_dms,
+    "BTN": handle_btn,
+    "GSG_Accel": handle_accel,
+    "GSG_Gyro": handle_gyro
 }
 
 def process_automation_rules(payload):

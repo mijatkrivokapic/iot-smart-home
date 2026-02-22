@@ -17,6 +17,7 @@ class SystemState:
         self._state = {
             "alarm_status": AlarmStatus.ARMED,
             "people_count": 0,
+            "timer_increment":10
         }
         self._lock = threading.Lock()
         self._arm_timer = None
@@ -54,6 +55,12 @@ class SystemState:
                 self._arm_timer.start()
             else:
                 self._change_alarm_status(new_status)
+
+    def set_timer_increment(self, increment):
+        with self._lock:
+            self._state["timer_increment"] = increment
+            print(f"📢 Timer increment set to: {increment} seconds")
+            socketio_helper.socketio.emit("state-update", self._state)
 
     def get(self, key):
         with self._lock:

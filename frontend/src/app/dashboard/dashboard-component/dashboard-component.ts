@@ -6,10 +6,12 @@ import { RouterLinkWithHref } from '@angular/router';
 import {MatCardModule} from '@angular/material/card';
 import {MatButton} from '@angular/material/button';
 import {SystemStateService} from '../../services/system-state-service';
+import {Pi1Dashboard} from '../pi1-dashboard/pi1-dashboard';
+import {Pi2Dashboard} from '../pi2-dashboard/pi2-dashboard';
 
 @Component({
   selector: 'app-dashboard-component',
-  imports: [CommonModule, RouterLinkWithHref, MatCardModule, MatButton],
+  imports: [CommonModule, RouterLinkWithHref, MatCardModule, MatButton, Pi1Dashboard, Pi2Dashboard],
   templateUrl: './dashboard-component.html',
   styleUrl: './dashboard-component.scss',
   standalone: true
