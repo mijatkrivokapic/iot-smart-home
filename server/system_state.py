@@ -1,12 +1,12 @@
 import threading
-from enum import Enum
+from enum import StrEnum
 from threading import Timer
 
 import socketio_helper
 from mqtt_helper import send_actuator_command
 
 
-class AlarmStatus(Enum):
+class AlarmStatus(StrEnum):
     DISARMED = "DISARMED"
     ARMED = "ARMED"
     ACTIVATED = "ACTIVATED"
