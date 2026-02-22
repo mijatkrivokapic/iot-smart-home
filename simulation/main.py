@@ -16,6 +16,7 @@ from components.pir import run_pir
 from mqtt_wrapper import get_mqtt_client, init_mqtt_client
 from settings import load_settings
 from components.four_segment_display import run_4sd
+from components.btn import run_btn
 
 try:
     import RPi.GPIO as GPIO
@@ -102,7 +103,7 @@ if __name__ == "__main__":
                     #run_ds(pi2_settings['DS2'], threads, stop_event)
                     #run_dus(pi2_settings['DUS2'], threads, stop_event)
                     #run_pir(pi2_settings['DPIR2'], threads, stop_event)
-                    #run_ds(pi2_settings['BTN'], threads, stop_event)
+                    run_btn(pi2_settings['BTN'], threads, stop_event)
                     #run_dht(pi2_settings['DHT3'], threads, stop_event)
                     #run_gyro(pi2_settings['GSG'], threads, stop_event)
                     run_4sd(pi2_settings['4SD'])

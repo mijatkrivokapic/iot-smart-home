@@ -43,19 +43,14 @@ class TimerState:
     def add_time(self, seconds):
         with self.lock:
             if self.is_blinking:
-                self.stop_blinking()
-                return
+                self.is_blinking = False
+                self.is_running = False
+                self.current_time = 0
             
-            self.current_time += seconds
-            self.is_running = True
-            self.is_blinking = False
-        self._notify()
-
-    def stop_blinking(self):
-        with self.lock:
-            self.is_blinking = False
-            self.is_running = False
-            self.current_time = 0
+            elif self.is_running:
+                self.current_time += seconds
+                self.is_running = True
+                self.is_blinking = False
         self._notify()
 
     def get_state(self):
