@@ -38,6 +38,16 @@ tr.mat-row:nth-child(even) td {
   background: #fafafa;
 }
 
+.start-timer-btn {
+  margin: 12px 0;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
 @media (max-width: 800px) {
   .dashboard-card {
     max-width: 98vw;
@@ -49,3 +59,90 @@ tr.mat-row:nth-child(even) td {
   }
 }
 
+.timer-card {
+  max-width: 700px;
+  margin: 24px auto;
+  padding: 12px;
+}
+
+.timer-display {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.timer-grid {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 16px;
+  align-items: center;
+}
+
+.timer-left {
+  display:flex;
+  gap:16px;
+  align-items:center;
+}
+
+.digital-clock {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 2.4rem;
+  background: linear-gradient(135deg,#0b3d91,#0582d0);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  min-width: 140px;
+  text-align: center;
+}
+
+.digital-clock .blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.increment-display {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.increment-block {
+  display:flex;
+  flex-direction:column;
+}
+
+.increment-block .label { font-size: 0.85rem; color:#666; }
+.increment-block .value { font-size: 1.25rem; font-weight:600; }
+
+.increment-value {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.timer-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.timer-right { display:flex; justify-content:center; }
+.actions-vertical { display:flex; flex-direction:column; gap:10px; }
+.actions-vertical button { justify-content:flex-start; gap:8px; }
+
+mat-icon { margin-right:6px; }
+
+@media (max-width:720px){
+  .timer-grid{ grid-template-columns: 1fr; }
+  .timer-right{ margin-top: 8px; }
+  .digital-clock{ font-size:1.8rem; min-width:110px; }
+}
+
+.timer-container {
+  text-align: center;
+  margin-top: 50px;
+}

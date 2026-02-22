@@ -9,6 +9,7 @@ class SystemState:
         self._state = {
             "alarm_status": "ARMED",  # DISARMED, ARMED, ACTIVATED
             "people_count": 0,
+            "timer_increment":10
         }
         self._lock = threading.Lock()
 
@@ -29,6 +30,12 @@ class SystemState:
                 send_actuator_command("PI1","DB",0,None)
                 print("🛑 Command Sent: BUZZER OFF")
 
+            socketio_helper.socketio.emit("state-update", self._state)
+
+    def set_timer_increment(self, increment):
+        with self._lock:
+            self._state["timer_increment"] = increment
+            print(f"📢 Timer increment set to: {increment} seconds")
             socketio_helper.socketio.emit("state-update", self._state)
 
     def get(self, key):

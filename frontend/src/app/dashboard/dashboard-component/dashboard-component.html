@@ -2,40 +2,24 @@
 
 <hr />
 <h2>Alarm state: {{state==null ? 'UNKNOWN' : state?.alarm_status}}</h2>
-<div class="dashboard-list">
-  <mat-card class="dashboard-card">
-    <mat-card-header>
-      <mat-card-title>PI1 Dashboard</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Live sensor data from Raspberry Pi 1.</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" routerLink="/pi1-dashboard">View</button>
-    </mat-card-actions>
-  </mat-card>
+  <app-pi1-dashboard></app-pi1-dashboard>
 
-  <mat-card class="dashboard-card">
-    <mat-card-header>
-      <mat-card-title>PI2 Dashboard</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Live sensor data from Raspberry Pi 2.</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" routerLink="/pi2-dashboard">View</button>
-    </mat-card-actions>
-  </mat-card>
+  <app-pi2-dashboard></app-pi2-dashboard>
 
-  <mat-card class="dashboard-card">
-    <mat-card-header>
-      <mat-card-title>PI3 Dashboard</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Live sensor data from Raspberry Pi 3.</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary">View</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+  <app-pi2-dashboard></app-pi2-dashboard>
+
+<mat-card style="margin-top: 32px;">
+  <mat-card-header>
+    <mat-card-title>PI1 Grafana Dashboard</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <iframe
+      src="http://localhost:3000/d/adk82vw?orgId=1&refresh=10s"
+      width="100%"
+      height="1200"
+      style="border-radius:8px; margin-top:12px;"
+      allowfullscreen>
+    </iframe>
+  </mat-card-content>
+</mat-card>
+
