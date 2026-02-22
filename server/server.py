@@ -9,10 +9,9 @@ from automation_rules.automation_rules import process_automation_rules
 from automation_rules.dms import PASSWORD
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from flask_socketio import SocketIO
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
-from mqtt_helper import init_mqtt, mqtt_client
+from mqtt_helper import init_mqtt, mqtt_client, send_actuator_command
 from system_state import state
 
 app = Flask(__name__)
