@@ -4,14 +4,15 @@ import time
 from queue import Queue
 
 import paho.mqtt.client as mqtt
+import socketio_helper
 from automation_rules.automation_rules import process_automation_rules
+from automation_rules.dms import PASSWORD
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_socketio import SocketIO
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
-from mqtt_helper import init_mqtt, mqtt_client, send_actuator_command
-import socketio_helper
+from mqtt_helper import init_mqtt, mqtt_client
 from system_state import state
 
 app = Flask(__name__)
@@ -186,6 +187,23 @@ def get_system_state():
     try:
         current_state = state.get_all()
         return jsonify(current_state), 200
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
+@app.route('/api/password', methods=['POST'])
+def submit_password():
+    try:
+        data = request.get_json(force=True, silent=True) or {}
+        pw = str(data.get('password', ''))
+
+        if pw != PASSWORD:
+            return jsonify({"status": "error", "message": "Invalid password"}), 403
+        
+        process_automation_rules({"sensor": "DMS", "value": pw, "simulated": False})
+
+        return jsonify({"status": "ok", "message": "Password accepted"}), 200
+
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
