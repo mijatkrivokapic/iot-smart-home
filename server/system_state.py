@@ -1,35 +1,59 @@
 import threading
-import time
-import socketio
-from mqtt_helper import send_actuator_command
+from enum import Enum
+from threading import Timer
+
 import socketio_helper
+from mqtt_helper import send_actuator_command
+
+
+class AlarmStatus(Enum):
+    DISARMED = "DISARMED"
+    ARMED = "ARMED"
+    ACTIVATED = "ACTIVATED"
+    ARMING = "ARMING"
 
 class SystemState:
     def __init__(self):
         self._state = {
-            "alarm_status": "ARMED",  # DISARMED, ARMED, ACTIVATED
+            "alarm_status": AlarmStatus.ARMED,
             "people_count": 0,
         }
         self._lock = threading.Lock()
+        self._arm_timer = None
+    
+    def _change_alarm_status(self, status):
+        self._state["alarm_status"] = status
+        print(f"📢 Alarm state changed to: {status}")
+        if status is AlarmStatus.ACTIVATED:
+            send_actuator_command("PI1", "DB", 1, None)
+            print("🚀 Command Sent: BUZZER ON")
+        elif status is AlarmStatus.DISARMED:
+            send_actuator_command("PI1", "DB", 0, None)
+            print("🛑 Command Sent: BUZZER OFF")
+        socketio_helper.socketio.emit("state-update", self._state)
 
     def set_alarm_status(self, new_status):
         with self._lock:
             old_status = self._state["alarm_status"]
-            if old_status == new_status:
+            if old_status is new_status:
                 return
 
-            self._state["alarm_status"] = new_status
-            print(f"📢 Alarm state changed: {old_status} -> {new_status}")
+            # TODO: Log state change to InfluxDB
 
-            if new_status == "ACTIVATED":
-                send_actuator_command("PI1","DB",1,None)
-                print("🚀 Command Sent: BUZZER ON")
-            
-            elif new_status == "ARMED":
-                send_actuator_command("PI1","DB",0,None)
-                print("🛑 Command Sent: BUZZER OFF")
+            if self._arm_timer is not None and new_status is not AlarmStatus.ARMED:
+                print("⏱️ Alarm state changed - cancelling pending timer")
+                self._arm_timer.cancel()
+                self._arm_timer = None
 
-            socketio_helper.socketio.emit("state-update", self._state)
+            if new_status is AlarmStatus.ARMED:
+                if self._arm_timer is not None:
+                    return
+                self._change_alarm_status(AlarmStatus.ARMING)
+                print("⏱️ Alarm arming initiated - will activate in 10 seconds...")
+                self._arm_timer = Timer(10.0, lambda: self._change_alarm_status(new_status))
+                self._arm_timer.start()
+            else:
+                self._change_alarm_status(new_status)
 
     def get(self, key):
         with self._lock:

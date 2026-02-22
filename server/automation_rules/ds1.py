@@ -1,18 +1,19 @@
 from threading import Timer
-from system_state import state
+
+from system_state import AlarmStatus, state
 
 alarm_timer = None
 
 def turn_on_alarm():
     global alarm_timer
-    if state.get("alarm_status") == "ARMED":
-        state.set_alarm_status("ACTIVATED")
+    if state.get("alarm_status") is AlarmStatus.ARMED:
+        state.set_alarm_status(AlarmStatus.ACTIVATED)
         print("🚨 Alarm Activated!")
     alarm_timer = None
 
 def turn_off_alarm():
-    if state.get("alarm_status") == "ACTIVATED":
-        state.set_alarm_status("ARMED")
+    if state.get("alarm_status") is AlarmStatus.ACTIVATED:
+        state.set_alarm_status(AlarmStatus.ARMED)
         print("🛑 Alarm Deactivated.")
 
 def handle_ds1(payload):
@@ -27,7 +28,7 @@ def handle_ds1(payload):
         turn_off_alarm() 
 
     elif sensor_value == 1:
-        if current_status == "ACTIVATED" or current_status == "DISARMED":
+        if current_status is AlarmStatus.ACTIVATED or current_status is AlarmStatus.DISARMED:
             return
 
         if alarm_timer is None:
