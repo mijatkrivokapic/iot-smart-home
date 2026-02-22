@@ -1,8 +1,12 @@
-from components.dl import handle_dl
-from components.db import handle_db
+from .db import handle_db
+from .dl import handle_dl
+from .lcd.lcd import handle_lcd
+from .rgb import handle_rgb
 
 ACTUATOR_RULES = {
     "DL": handle_dl,
+    "BRGB": handle_rgb,
+    "LCD": handle_lcd,
     "DB": handle_db
 }
 

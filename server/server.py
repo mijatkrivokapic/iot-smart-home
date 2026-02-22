@@ -113,16 +113,31 @@ def write_to_influxdb(topic, payload):
         is_simulated = payload.get("simulated", False)
         timestamp = payload.get("timestamp", time.time())
         
-        # Create InfluxDB Point
-        point = (
-            Point(sensor_name)  # measurement name
-            .tag("sensor", sensor_name)
-            .tag("device", device_name)
-            .tag("topic", topic)
-            .tag("simulated", str(is_simulated))
-            .field("value", value)
-            .time(int(timestamp * 1e9))  # nanoseconds
-        )
+        # TODO: switch based on sensor type (ie DHT both temperature and humidity in the same measurement, separated by tag)
+        if "DHT" in sensor_name:
+            point = []
+            for k, v in value.items():
+                point.append(
+                    Point(sensor_name)
+                    .tag("sensor", sensor_name)
+                    .tag("device", device_name)
+                    .tag("topic", topic)
+                    .tag("simulated", str(is_simulated))
+                    .tag("type", k)  # temperature or humidity
+                    .field("value", v)
+                    .time(int(timestamp * 1e9))
+                )
+        else:
+            # Create InfluxDB Point
+            point = (
+                Point(sensor_name)  # measurement name
+                .tag("sensor", sensor_name)
+                .tag("device", device_name)
+                .tag("topic", topic)
+                .tag("simulated", str(is_simulated))
+                .field("value", value)
+                .time(int(timestamp * 1e9))  # nanoseconds
+            )
         
         # Write to InfluxDB
         write_api = influxdb_client.write_api(write_options=SYNCHRONOUS)
