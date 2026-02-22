@@ -103,10 +103,10 @@ if __name__ == "__main__":
                     #run_ds(pi2_settings['DS2'], threads, stop_event)
                     #run_dus(pi2_settings['DUS2'], threads, stop_event)
                     #run_pir(pi2_settings['DPIR2'], threads, stop_event)
-                    run_btn(pi2_settings['BTN'], threads, stop_event)
+                    #run_btn(pi2_settings['BTN'], threads, stop_event)
                     #run_dht(pi2_settings['DHT3'], threads, stop_event)
-                    #run_gyro(pi2_settings['GSG'], threads, stop_event)
-                    run_4sd(pi2_settings['4SD'])
+                    run_gyro(pi2_settings['GSG'], threads, stop_event)
+                    #run_4sd(pi2_settings['4SD'])
                     
                 if '--actuators' in args:
                     run_actuators_logic(pi1_settings)
