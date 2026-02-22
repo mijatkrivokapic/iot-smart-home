@@ -13,4 +13,12 @@ export class TimerService {
     return this.http.post(`${environment.apiUrL}/api/timer/start`,{'time':duration});
   }
 
+  setTimerIncrement(increment: number): Observable<any> {
+    return this.http.put(`${environment.apiUrL}/api/timer/config`, { 'time' : increment });
+  }
+
+  incrementTimer(): Observable<any> {
+    return this.http.post(`${environment.apiUrL}/api/timer/increment`, {});
+  }
+
 }

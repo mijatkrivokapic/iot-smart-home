@@ -203,12 +203,22 @@ def start_timer():
     }), 200
 
 @app.route('/api/timer/config', methods=['PUT'])
-def start_timer():
+def set_timer_increment():
     data = request.get_json()
 
     timer_seconds = data.get("time")
 
-    state.set("4SD_timer", timer_seconds)
+    state.set_timer_increment(timer_seconds)
+    
+    return jsonify({
+        "status": "success"
+    }), 200
+    
+
+@app.route('/api/timer/increment', methods=['POST'])
+def increment_timer():
+
+    send_actuator_command("PI2","4SD","add_time",state.get("timer_increment"))
     
     return jsonify({
         "status": "success"
