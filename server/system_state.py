@@ -62,6 +62,16 @@ class SystemState:
             print(f"📢 Timer increment set to: {increment} seconds")
             socketio_helper.socketio.emit("state-update", self._state)
 
+    def adjust_people_count(self, delta: int = 1):
+        with self._lock:
+            old = int(self._state.get("people_count", 0))
+            new = old + int(delta)
+            if new < 0:
+                new = 0
+            self._state["people_count"] = new
+            print(f"👥 People count changed: {old} -> {new}")
+            socketio_helper.socketio.emit("state-update", self._state)
+
     def get(self, key):
         with self._lock:
             return self._state.get(key)
