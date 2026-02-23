@@ -30,7 +30,7 @@ def run_dms(settings, threads, stop_event):
         print(f"Starting {settings['component']} sensor")
         dms_thread = threading.Thread(
             target=run_dms_sensor, 
-            args=(2, dms_callback, stop_event, settings)
+            args=(0.2, dms_callback, stop_event, settings)
         )
         dms_thread.start()
         threads.append(dms_thread)
