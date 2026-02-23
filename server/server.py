@@ -30,6 +30,8 @@ MQTT_CONFIG = {
     "topics": ["home/sensors/+"],  # Subscribe to all home/sensors/* topics
 }
 
+COLOR_MAP = {'red': (1, 0, 0), 'green': (0, 1, 0), 'blue': (0, 0, 1)}
+
 # Global state
 influxdb_client = None
 message_queue = Queue(maxsize=1000)
@@ -247,6 +249,29 @@ def submit_password():
 
         return jsonify({"status": "ok", "message": "Password accepted"}), 200
 
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
+@app.route('/api/rgb', methods=['POST'])
+def set_rgb():
+    try:
+        data = request.get_json(force=True, silent=True) or {}
+        color = COLOR_MAP.get(data.get('color', '').lower())
+        if not color:
+            return jsonify({"status": "error", "message": "Invalid color"}), 400
+        # r = int(data.get('r', 0))
+        # g = int(data.get('g', 0))
+        # b = int(data.get('b', 0))
+
+        # r = max(0, min(255, r))
+        # g = max(0, min(255, g))
+        # b = max(0, min(255, b))
+
+        # send_actuator_command("PI3", "BRGB", (r, g, b), None)
+        send_actuator_command("PI3", "BRGB", color, None)
+
+        return jsonify({"status": "success"}), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
