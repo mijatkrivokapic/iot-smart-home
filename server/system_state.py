@@ -49,8 +49,8 @@ class SystemState:
                     "home/sensors/alarm_status", {"sensor": "alarm", "value": 0}
                 )
 
-            if self._arm_timer is not None and new_status is not AlarmStatus.ARMED:
-                print("⏱️ Alarm state changed - cancelling pending timer")
+            if self._arm_timer is not None and new_status is AlarmStatus.DISARMED:
+                print("⏱️ Alarm disarm - cancelling pending timer")
                 self._arm_timer.cancel()
                 self._arm_timer = None
 
@@ -59,9 +59,7 @@ class SystemState:
                     return
                 self._change_alarm_status(AlarmStatus.ARMING)
                 print("⏱️ Alarm arming initiated - will activate in 10 seconds...")
-                self._arm_timer = Timer(
-                    10.0, lambda: self._change_alarm_status(new_status)
-                )
+                self._arm_timer = Timer(10.0, self._change_alarm_status(new_status))
                 self._arm_timer.start()
             else:
                 self._change_alarm_status(new_status)

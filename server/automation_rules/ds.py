@@ -5,6 +5,8 @@ from system_state import AlarmStatus, state
 alarm_timer = None
 open_door_timer = None
 
+door_alarm = False
+
 
 def turn_on_alarm():
     global alarm_timer
@@ -15,6 +17,8 @@ def turn_on_alarm():
 
 
 def open_door_alarm():
+    global door_alarm
+    door_alarm = True
     state.set_alarm_status(AlarmStatus.ACTIVATED)
     print("🚨 Door opened while alarm armed - Alarm Activated!")
 
@@ -35,7 +39,9 @@ def handle_ds(payload):
         if open_door_timer is not None:
             open_door_timer.cancel()
             open_door_timer = None
-        turn_off_alarm()
+        if door_alarm:
+            door_alarm = False
+            turn_off_alarm()
     elif sensor_value == 1:
         if current_status is AlarmStatus.ACTIVATED:
             return
