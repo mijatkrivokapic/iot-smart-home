@@ -1,8 +1,10 @@
 import json
 import time
+
 import paho.mqtt.client as mqtt
 
 mqtt_client = mqtt.Client()
+
 
 def init_mqtt(broker, port):
     """
@@ -17,6 +19,7 @@ def init_mqtt(broker, port):
         print(f"✗ MQTT connection error: {e}")
         return False
 
+
 def send_actuator_command(pi_id, actuator_id, action, value=None):
     """
     Sends a command to an actuator.
@@ -28,15 +31,29 @@ def send_actuator_command(pi_id, actuator_id, action, value=None):
         "actuator": actuator_id,
         "action": action,
         "value": value,
-        "timestamp": time.time()
+        "timestamp": time.time(),
     }
-    
+
     try:
         if mqtt_client.is_connected():
             mqtt_client.publish(topic, json.dumps(payload), qos=1)
             print(f"⚡ Action: sent {action} on {actuator_id} (PI: {pi_id})")
         else:
             print("⚠ Cannot send command: MQTT not connected")
-            
+
     except Exception as e:
         print(f"✗ Error sending command: {e}")
+
+
+def send_message(topic, payload):
+    """
+    Utility function to send a message to a topic.
+    """
+    try:
+        if mqtt_client.is_connected():
+            mqtt_client.publish(topic, json.dumps(payload), qos=1)
+            print(f"✓ Sent message to {topic}: {payload}")
+        else:
+            print("⚠ Cannot send message: MQTT not connected")
+    except Exception as e:
+        print(f"✗ Error sending message: {e}")
