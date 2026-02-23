@@ -3,7 +3,7 @@ from enum import StrEnum
 from threading import Timer
 
 import socketio_helper
-from mqtt_helper import send_actuator_command
+from mqtt_helper import send_actuator_command, send_message
 
 
 class AlarmStatus(StrEnum):
@@ -16,7 +16,7 @@ class AlarmStatus(StrEnum):
 class SystemState:
     def __init__(self):
         self._state = {
-            "alarm_status": AlarmStatus.ARMED,
+            "alarm_status": AlarmStatus.DISARMED,
             "people_count": 0,
             "timer_increment": 10,
         }
@@ -40,7 +40,14 @@ class SystemState:
             if old_status is new_status:
                 return
 
-            # TODO: Log state change to InfluxDB
+            if new_status is AlarmStatus.ACTIVATED:
+                send_message(
+                    "home/sensors/alarm_status", {"sensor": "alarm", "value": 1}
+                )
+            elif new_status is AlarmStatus.DISARMED:
+                send_message(
+                    "home/sensors/alarm_status", {"sensor": "alarm", "value": 0}
+                )
 
             if self._arm_timer is not None and new_status is not AlarmStatus.ARMED:
                 print("⏱️ Alarm state changed - cancelling pending timer")
