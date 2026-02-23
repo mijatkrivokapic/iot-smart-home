@@ -19,6 +19,10 @@ class SystemState:
             "alarm_status": AlarmStatus.DISARMED,
             "people_count": 0,
             "timer_increment": 10,
+            "alarm_config":{
+                "door_alarm":False,
+                "gyro_alarm":False,
+            }
         }
         self._lock = threading.Lock()
         self._arm_timer = None
@@ -86,6 +90,12 @@ class SystemState:
                 and new > 0
             ):
                 self.set_alarm_status(AlarmStatus.ACTIVATED)
+            socketio_helper.socketio.emit("state-update", self._state)
+
+    def set_alarm_config(self, config):
+        with self._lock:
+            self._state["alarm_config"] = config
+            print(f"📢 Alarm configuration updated: {config}")
             socketio_helper.socketio.emit("state-update", self._state)
 
     def get(self, key):

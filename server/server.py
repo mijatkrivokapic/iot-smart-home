@@ -274,7 +274,18 @@ def set_rgb():
         return jsonify({"status": "success"}), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+    
 
+
+@app.route('/api/alarm/config', methods=['PUT'])
+def set_alarm_config():
+    data = request.get_json()
+
+    config = data.get("alarm_config", {})
+
+    state.set_alarm_config(config)
+
+    return jsonify({"status": "success"}), 200
 
 if __name__ == '__main__':
     # Initialize connections
