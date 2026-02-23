@@ -59,7 +59,9 @@ class SystemState:
                     return
                 self._change_alarm_status(AlarmStatus.ARMING)
                 print("⏱️ Alarm arming initiated - will activate in 10 seconds...")
-                self._arm_timer = Timer(10.0, self._change_alarm_status(new_status))
+                self._arm_timer = Timer(
+                    10.0, self._change_alarm_status, args=[new_status]
+                )
                 self._arm_timer.start()
             else:
                 self._change_alarm_status(new_status)
