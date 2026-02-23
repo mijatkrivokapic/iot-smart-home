@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AlarmService } from '../../services/alarm-service';
+import {environment} from '../../environment/environment';
 
 @Component({
   selector: 'app-pi1-dashboard',
@@ -19,6 +20,7 @@ import { AlarmService } from '../../services/alarm-service';
 export class Pi1Dashboard implements OnInit {
   sensorData: { [key: string]: SensorData } = {};
   password: string = '';
+  cameraUrl: string = `http://192.168.107.14${environment.pi1Id}:8080/?action=stream`;
 
   constructor(private sensorService: SensorService, private alarmService: AlarmService) {}
 
