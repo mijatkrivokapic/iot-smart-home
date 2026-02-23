@@ -12,16 +12,17 @@ class AlarmStatus(StrEnum):
     ACTIVATED = "ACTIVATED"
     ARMING = "ARMING"
 
+
 class SystemState:
     def __init__(self):
         self._state = {
             "alarm_status": AlarmStatus.ARMED,
             "people_count": 0,
-            "timer_increment":10
+            "timer_increment": 10,
         }
         self._lock = threading.Lock()
         self._arm_timer = None
-    
+
     def _change_alarm_status(self, status):
         self._state["alarm_status"] = status
         print(f"📢 Alarm state changed to: {status}")
@@ -51,7 +52,9 @@ class SystemState:
                     return
                 self._change_alarm_status(AlarmStatus.ARMING)
                 print("⏱️ Alarm arming initiated - will activate in 10 seconds...")
-                self._arm_timer = Timer(10.0, lambda: self._change_alarm_status(new_status))
+                self._arm_timer = Timer(
+                    10.0, lambda: self._change_alarm_status(new_status)
+                )
                 self._arm_timer.start()
             else:
                 self._change_alarm_status(new_status)
@@ -70,6 +73,12 @@ class SystemState:
                 new = 0
             self._state["people_count"] = new
             print(f"👥 People count changed: {old} -> {new}")
+            if (
+                self._state["alarm_status"] is AlarmStatus.ARMED
+                and old == 0
+                and new > 0
+            ):
+                self.set_alarm_status(AlarmStatus.ACTIVATED)
             socketio_helper.socketio.emit("state-update", self._state)
 
     def get(self, key):
@@ -79,6 +88,7 @@ class SystemState:
     def get_all(self):
         with self._lock:
             return self._state.copy()
+
 
 # Initialize globally
 state = SystemState()
