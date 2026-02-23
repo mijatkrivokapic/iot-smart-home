@@ -1,8 +1,9 @@
-from system_state import state
+from system_state import AlarmStatus, state
 
-GRAVITY_BASE = 16384          
-THRESHOLD_ACCEL_MOVE = 3000   
-FREE_FALL_THRESHOLD = 2000 
+GRAVITY_BASE = 16384
+THRESHOLD_ACCEL_MOVE = 3000
+FREE_FALL_THRESHOLD = 2000
+
 
 def handle_accel(payload):
     mag_accel = payload.get("value", 0)
@@ -18,6 +19,7 @@ def handle_accel(payload):
         turn_on_alarm()
         return
 
+
 def handle_gyro(payload):
     mag_gyro = payload.get("value", 0)
 
@@ -28,6 +30,6 @@ def handle_gyro(payload):
 
 
 def turn_on_alarm():
-    if state.get("alarm_status") == "ARMED":
-        state.set_alarm_status("ACTIVATED")
+    if state.get("alarm_status") is AlarmStatus.ARMED:
+        state.set_alarm_status(AlarmStatus.ACTIVATED)
         print("🚨 Alarm Activated!")
