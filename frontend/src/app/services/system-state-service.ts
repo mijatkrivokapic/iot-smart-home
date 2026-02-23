@@ -17,4 +17,10 @@ export class SystemStateService {
   getCurrentState(): Observable<any> {
     return this.http.get<Observable<any>>(`${environment.apiUrl}/api/state`);
   }
+
+  // Update alarm configuration on the server
+  setAlarmConfig(alarmConfig: any): Observable<any> {
+    // send PUT to /api/state with alarm_config payload
+    return this.http.put(`${environment.apiUrl}/api/alarm/config`, { alarm_config: alarmConfig });
+  }
 }

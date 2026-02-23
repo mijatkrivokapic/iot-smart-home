@@ -2,6 +2,7 @@
 
 <hr />
 <h2>Alarm state: {{state==null ? 'UNKNOWN' : state?.alarm_status}}</h2>
+<button mat-stroked-button (click)="openAlarmConfig()">Configure Alarm</button>
   <app-pi1-dashboard></app-pi1-dashboard>
 
   <app-pi2-dashboard></app-pi2-dashboard>
@@ -22,4 +23,3 @@
     </iframe>
   </mat-card-content>
 </mat-card>
-

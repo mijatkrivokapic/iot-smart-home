@@ -29,7 +29,7 @@ def run_ir(settings, threads, stop_event):
         print("Starting IR sensor")
         ir_thread = threading.Thread(
             target=run_ir_sensor,
-            args=(2, ir_callback, stop_event, settings)
+            args=(0.2, ir_callback, stop_event, settings)
         )
         ir_thread.start()
         threads.append(ir_thread)

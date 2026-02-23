@@ -30,6 +30,6 @@ def handle_gyro(payload):
 
 
 def turn_on_alarm():
-    if state.get("alarm_status") is AlarmStatus.ARMED:
+    if state.get("alarm_status") is AlarmStatus.ARMED and state.get("alarm_config").get("gyro_alarm", False):
         state.set_alarm_status(AlarmStatus.ACTIVATED)
         print("🚨 Alarm Activated!")

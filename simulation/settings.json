@@ -1,11 +1,11 @@
 {
     "PI1": {
-        "DS1": { "device": "PI1", "component":"DS1",  "simulated": true, "pin": 2, "topic": "home/sensors/door_sensor" },
-        "DL":  { "device": "PI1", "component":"DL", "simulated": true, "pin": 18, "topic": "home/actuators/door_light" },
+        "DS1": { "device": "PI1", "component":"DS1",  "simulated": false, "pin": 22, "topic": "home/sensors/door_sensor" },
+        "DL":  { "device": "PI1", "component":"DL", "simulated": true, "pin": 18, "topic": "home/sensors/door_light" },
         "DUS1": { "device": "PI1", "component":"DUS1", "simulated": true, "trig": 23, "echo": 24, "topic": "home/sensors/ultrasonic" },
-        "DB":  { "device": "PI1", "component":"DB", "simulated": true, "pin": 20, "topic": "home/actuators/buzzer" },
+        "DB":  { "device": "PI1", "component":"DB", "simulated": false, "pin": 27, "topic": "home/actuators/buzzer" },
         "DPIR1": { "device":"PI1", "component":"DPIR1", "simulated": true, "pin": 16, "topic": "home/sensors/motion" },
-        "DMS": { "device":"PI1", "component":"DMS", "simulated": true, "pins": [5, 6, 13, 19, 26, 20, 21, 22], "topic": "home/sensors/keypad" }
+        "DMS": { "device":"PI1", "component":"DMS", "simulated": false, "pins": [25, 8, 7, 1, 12, 16, 20, 21], "topic": "home/sensors/keypad" }
     },
     "PI2": {
         "DS2": { "device": "PI2", "component":"DS2", "simulated": true, "pin": 21, "topic": "home/sensors/door_sensor" },
@@ -18,14 +18,14 @@
     },
     "PI3": {
         "DHT1": { "device": "PI3", "component":"DHT1", "simulated": true, "pin": 4, "topic": "home/sensors/temperature_humidity" },
-        "DHT2": { "device": "PI3", "component":"DHT2", "simulated": true, "pin": 17, "topic": "home/sensors/temperature_humidity" },
-        "IR": { "device": "PI3", "component":"IR", "simulated": true, "pin": 27, "topic": "home/sensors/ir_sensor" },
+        "DHT2": { "device": "PI3", "component":"DHT2", "simulated": true, "pin": 13, "topic": "home/sensors/temperature_humidity" },
+        "IR": { "device": "PI3", "component":"IR", "simulated": false, "pin": 10, "topic": "home/sensors/ir_sensor" },
         "DPIR3": { "device":"PI3", 	"component":"DPIR3", "simulated": true,	"pin": 16, "topic": "home/sensors/motion" },
-        "BRGB": { "device": "PI3", "component": "BRGB", "simulated": true, "pins": {"r": 5, "g": 6, "b": 13}, "topic": "home/actuators/rgb_led" },
-        "LCD": { "device": "PI3", "component": "LCD", "simulated": true, "pins": {"rs": 0, "e": 2, "db": [4, 5, 6, 7]}, "topic": "home/actuators/lcd_display"}
+        "BRGB": { "device": "PI3", "component": "BRGB", "simulated": false, "pins": {"r": 17, "g": 27, "b": 22}, "topic": "home/actuators/rgb_led" },
+        "LCD": { "device": "PI3", "component": "LCD", "simulated": false, "pins": {"rs": 0, "e": 2, "db": [4, 5, 6, 7]}, "topic": "home/actuators/lcd_display"}
     },
     "MQTT": {
-        "broker": "localhost",
+        "broker": "192.168.107.164",
         "port": 1883,
         "batch_size": 1,
         "batch_timeout": 1
