@@ -4,6 +4,13 @@
     <mat-card-subtitle>Live sensor data from Raspberry Pi 1</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
+    <div class="password-entry">
+      <mat-form-field appearance="outline">
+        <mat-label>Enter 4-digit password</mat-label>
+        <input matInput maxlength="4" [(ngModel)]="password" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="submitPassword()">Submit</button>
+    </div>
     <table mat-table [dataSource]="sensorData | keyvalue" class="mat-elevation-z2">
       <ng-container matColumnDef="sensor">
         <th mat-header-cell *matHeaderCellDef>Sensor</th>

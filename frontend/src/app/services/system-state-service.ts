@@ -15,6 +15,6 @@ export class SystemStateService {
   }
 
   getCurrentState(): Observable<any> {
-    return this.http.get<Observable<any>>(`${environment.apiUrL}/api/state`);
+    return this.http.get<Observable<any>>(`${environment.apiUrl}/api/state`);
   }
 }

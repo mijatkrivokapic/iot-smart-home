@@ -15,4 +15,8 @@ export class SensorService {
   onPi2SensorUpdate(): Observable<any> {
     return this.socket.fromEvent('sensor-data-PI2');
   }
+
+  onPi3SensorUpdate(): Observable<any> {
+    return this.socket.fromEvent('sensor-data-PI3');
+  }
 }
