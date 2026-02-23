@@ -1,7 +1,7 @@
 {
     "PI1": {
         "DS1": { "device": "PI1", "component":"DS1",  "simulated": true, "pin": 2, "topic": "home/sensors/door_sensor" },
-        "DL":  { "device": "PI1", "component":"DL", "simulated": true, "pin": 18, "topic": "home/actuators/door_light" },
+        "DL":  { "device": "PI1", "component":"DL", "simulated": true, "pin": 18, "topic": "home/sensors/door_light" },
         "DUS1": { "device": "PI1", "component":"DUS1", "simulated": true, "trig": 23, "echo": 24, "topic": "home/sensors/ultrasonic" },
         "DB":  { "device": "PI1", "component":"DB", "simulated": true, "pin": 20, "topic": "home/actuators/buzzer" },
         "DPIR1": { "device":"PI1", "component":"DPIR1", "simulated": true, "pin": 16, "topic": "home/sensors/motion" },

@@ -49,3 +49,34 @@ tr.mat-row:nth-child(even) td {
   }
 }
 
+.dl-indicator {
+  display: flex;
+  align-items: center;
+  margin-left: 12px;
+  padding:10px;
+}
+
+.dl-indicator mat-icon {
+  font-size: 28px;
+  opacity: 0.35;
+  transition: all 0.2s ease;
+}
+
+.dl-indicator mat-icon {
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px  1px 0 #000,
+    1px  1px 0 #000;
+}
+
+.dl-indicator mat-icon.on {
+  color: #ffc107;
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.dl-indicator mat-icon.off {
+  color: #9e9e9e;
+  opacity: 0.45;
+}
