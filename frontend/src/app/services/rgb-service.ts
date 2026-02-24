@@ -9,10 +9,6 @@ import { environment } from '../environment/environment';
 export class RgbService {
   constructor(private http: HttpClient) {}
 
-  //   setRgb(r: number, g: number, b: number): Observable<any> {
-  //     return this.http.post(`${environment.apiUrl}/api/rgb`, { r, g, b });
-  //   }
-
   setRgb(color: string): Observable<any> {
     return this.http.post(`${environment.apiUrl}/api/rgb`, { color });
   }

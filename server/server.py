@@ -260,21 +260,11 @@ def set_rgb():
         color = COLOR_MAP.get(data.get('color', '').lower())
         if not color:
             return jsonify({"status": "error", "message": "Invalid color"}), 400
-        # r = int(data.get('r', 0))
-        # g = int(data.get('g', 0))
-        # b = int(data.get('b', 0))
-
-        # r = max(0, min(255, r))
-        # g = max(0, min(255, g))
-        # b = max(0, min(255, b))
-
-        # send_actuator_command("PI3", "BRGB", (r, g, b), None)
         send_actuator_command("PI3", "BRGB", color, None)
 
         return jsonify({"status": "success"}), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
-    
 
 
 @app.route('/api/alarm/config', methods=['PUT'])
@@ -286,6 +276,7 @@ def set_alarm_config():
     state.set_alarm_config(config)
 
     return jsonify({"status": "success"}), 200
+
 
 if __name__ == '__main__':
     # Initialize connections

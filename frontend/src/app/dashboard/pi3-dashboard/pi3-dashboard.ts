@@ -63,10 +63,6 @@ export class Pi3Dashboard implements OnInit {
   }
 
   sendRgb() {
-    // this.rgbService.setRgb(this.r, this.g, this.b).subscribe({
-    //   next: () => console.log('RGB set', this.r, this.g, this.b),
-    //   error: (e) => console.error('Failed to set RGB', e),
-    // });
     this.rgbService.setRgb(this.color).subscribe({
       next: () => console.log('RGB set', this.color),
       error: (e) => console.error('Failed to set RGB', e),
