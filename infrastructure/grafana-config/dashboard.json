@@ -24,7 +24,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cfc49arfmyhogd"
+        "uid": "dfc24g6c3356oe"
       },
       "fieldConfig": {
         "defaults": {
@@ -116,7 +116,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cfc49arfmyhogd"
+        "uid": "dfc24g6c3356oe"
       },
       "fieldConfig": {
         "defaults": {
@@ -205,7 +205,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cfc49arfmyhogd"
+        "uid": "dfc24g6c3356oe"
       },
       "fieldConfig": {
         "defaults": {
@@ -294,7 +294,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cfc49arfmyhogd"
+        "uid": "dfc24g6c3356oe"
       },
       "fieldConfig": {
         "defaults": {
@@ -387,7 +387,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cfc49arfmyhogd"
+        "uid": "dfc24g6c3356oe"
       },
       "fieldConfig": {
         "defaults": {
@@ -452,7 +452,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cfc49arfmyhogd"
+        "uid": "dfc24g6c3356oe"
       },
       "fieldConfig": {
         "defaults": {
@@ -537,7 +537,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cfc49arfmyhogd"
+        "uid": "dfc24g6c3356oe"
       },
       "fieldConfig": {
         "defaults": {
@@ -630,7 +630,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cfc49arfmyhogd"
+        "uid": "dfc24g6c3356oe"
       },
       "fieldConfig": {
         "defaults": {
@@ -715,7 +715,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cfc49arfmyhogd"
+        "uid": "dfc24g6c3356oe"
       },
       "fieldConfig": {
         "defaults": {
@@ -807,7 +807,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cfc49arfmyhogd"
+        "uid": "dfc24g6c3356oe"
       },
       "fieldConfig": {
         "defaults": {
@@ -899,7 +899,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "cfc49arfmyhogd"
+        "uid": "dfc24g6c3356oe"
       },
       "fieldConfig": {
         "defaults": {
@@ -1028,6 +1028,272 @@
       ],
       "title": "Temperature Humidity 3",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dfc24g6c3356oe"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisWidth": -5,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {device=\"PI3\", sensor=\"DHT1\", simulated=\"True\", topic=\"home/sensors/temperature_humidity\", type=\"humidity\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Humidity"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "left"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {device=\"PI3\", sensor=\"DHT1\", simulated=\"True\", topic=\"home/sensors/temperature_humidity\", type=\"temperature\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Temperature"
+              },
+              {
+                "id": "unit",
+                "value": "celsius"
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "left"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 40
+      },
+      "id": 13,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "query": "from(bucket: \"sensor_data\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"DHT1\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Temperature Humidity 1",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dfc24g6c3356oe"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisWidth": -5,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {device=\"PI3\", sensor=\"DHT2\", simulated=\"True\", topic=\"home/sensors/temperature_humidity\", type=\"humidity\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Humidity"
+              },
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "left"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {device=\"PI3\", sensor=\"DHT2\", simulated=\"True\", topic=\"home/sensors/temperature_humidity\", type=\"temperature\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Temperature"
+              },
+              {
+                "id": "unit",
+                "value": "celsius"
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "left"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 48
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "query": "from(bucket: \"sensor_data\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"DHT2\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Temperature Humidity 2",
+      "type": "timeseries"
     }
   ],
   "preload": false,
@@ -1044,5 +1310,5 @@
   "timezone": "browser",
   "title": "Dashboard",
   "uid": "adk82vw",
-  "version": 17
+  "version": 18
 }
