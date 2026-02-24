@@ -6,6 +6,8 @@ from .dus import handle_dus
 from .gyro import handle_accel, handle_gyro
 from .ir import handle_ir
 from .pir import handle_pir
+from .ds1 import handle_ds1
+from .ds2 import handle_ds2
 
 SENSOR_RULES = {
     "DPIR1": [handle_pir],
@@ -13,8 +15,8 @@ SENSOR_RULES = {
     "IR": [handle_ir],
     "DHT1": [handle_dht],
     "DHT2": [handle_dht],
-    "DS1": [handle_ds],
-    "DS2": [handle_ds],
+    "DS1": [handle_ds, handle_ds1],
+    "DS2": [handle_ds, handle_ds2],
     "DMS": [handle_dms],
     "DUS1": [handle_dus],
     "DUS2": [handle_dus],

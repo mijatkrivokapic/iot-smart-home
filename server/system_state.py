@@ -20,6 +20,7 @@ class SystemState:
             "people_count": 0,
             "timer_increment": 10,
             "alarm_config": {
+                "open_door_alarm": False,
                 "door_alarm": False,
                 "gyro_alarm": False,
                 "people_alarm": False,
