@@ -53,16 +53,34 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  openAlarmConfig(){
+  openAlarmConfig() {
     const cfg = this.state?.alarm_config || {};
-    const ref = this.dialog.open(AlarmConfigDialogComponent, { width: '420px', data: { alarm_config: cfg } });
+    const ref = this.dialog.open(AlarmConfigDialogComponent, {
+      width: '420px',
+      data: { alarm_config: cfg },
+    });
     ref.afterClosed().subscribe((result) => {
-      if(result){
+      if (result) {
         this.systemStateService.setAlarmConfig(result).subscribe({
-          next: (res) => { this.state = { ...this.state, alarm_config: result }; },
-          error: (err) => { console.error('Failed to set alarm config', err); }
+          next: (res) => {
+            this.state = { ...this.state, alarm_config: result };
+          },
+          error: (err) => {
+            console.error('Failed to set alarm config', err);
+          },
         });
       }
+    });
+  }
+
+  resetPeople() {
+    this.systemStateService.resetPeopleCount().subscribe({
+      next: () => {
+        console.log('People count reset');
+      },
+      error: (err) => {
+        console.error('Failed to reset people count', err);
+      },
     });
   }
 }

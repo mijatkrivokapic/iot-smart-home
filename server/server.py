@@ -278,6 +278,15 @@ def set_alarm_config():
     return jsonify({"status": "success"}), 200
 
 
+@app.route('/api/people/reset', methods=['POST'])
+def reset_people_count():
+    try:
+        state.set_people_count(0)
+        return jsonify({"status": "success"}), 200
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
 if __name__ == '__main__':
     # Initialize connections
     if not init_influxdb():

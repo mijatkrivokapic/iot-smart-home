@@ -100,6 +100,19 @@ class SystemState:
             print(f"📢 Alarm configuration updated: {config}")
             socketio_helper.socketio.emit("state-update", self._state)
 
+    def set_people_count(self, count: int = 0):
+        with self._lock:
+            try:
+                new = int(count)
+            except Exception:
+                return
+            old = int(self._state.get("people_count", 0))
+            if new < 0:
+                new = 0
+            self._state["people_count"] = new
+            print(f"👥 People count set: {old} -> {new}")
+            socketio_helper.socketio.emit("state-update", self._state)
+
     def get(self, key):
         with self._lock:
             return self._state.get(key)
