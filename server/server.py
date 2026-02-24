@@ -142,6 +142,8 @@ def write_to_influxdb(topic, payload):
                 .field("value", 1 if value else 0)
                 .time(int(timestamp * 1e9))
             )
+        elif "LCD" in sensor_name or "BRGB" in sensor_name:
+            pass
         else:
             # Create InfluxDB Point
             point = (
@@ -165,7 +167,9 @@ def write_to_influxdb(topic, payload):
         )
 
     except Exception as e:
-        print(f"✗ Error writing to InfluxDB: {e}")
+        print(
+            f"✗ Error writing to InfluxDB: {e} - {payload.get('sensor', 'Unknown')} - {payload.get('value', 'N/A')}"
+        )
 
 
 def database_writer_loop():
