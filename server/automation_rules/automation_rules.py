@@ -10,6 +10,7 @@ from .pir import handle_pir
 SENSOR_RULES = {
     "DPIR1": handle_pir,
     "DPIR2": handle_pir,
+    "DPIR3": handle_pir,
     "IR": handle_ir,
     "DHT1": handle_dht,
     "DHT2": handle_dht,
