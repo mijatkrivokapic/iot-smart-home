@@ -37,12 +37,18 @@ export class Pi3Dashboard implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.sensorService.onPi3SensorUpdate().subscribe((data: WebsocketMessage) => {
+    this.sensorService.onPi3SensorUpdate().subscribe((data: any) => {
       if (data.payload.sensor.includes('DHT') && typeof data.payload.value === 'object') {
         data.payload.value =
           data.payload.value.temperature + '°C / ' + data.payload.value.humidity + '%';
       }
-      this.sensorData[data.payload.sensor] = data.payload;
+      if (data.payload.sensor === 'BRGB') {
+        this.r = data.payload.value.r * 255;
+        this.g = data.payload.value.g * 255;
+        this.b = data.payload.value.b * 255;
+      } else {
+        this.sensorData[data.payload.sensor] = data.payload;
+      }
     });
   }
 

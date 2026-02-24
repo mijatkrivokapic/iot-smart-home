@@ -27,6 +27,10 @@
         <button mat-raised-button color="primary" (click)="setColorPresetByName('blue')">Blue</button>
         <button mat-raised-button color="accent" (click)="sendRgb()">Send</button>
       </div>
+        <div class="current-color" style="margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+        <strong>Current LED color:</strong>
+        <div class="swatch" [style.background]="'rgb(' + r + ',' + g + ',' + b + ')'" style="width:28px; height:20px; border:1px solid #ccc"></div>
+      </div>
     </div>
 
     <table mat-table [dataSource]="sensorData | keyvalue" class="mat-elevation-z2">
