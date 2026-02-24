@@ -42,15 +42,20 @@ def handle_ds(payload):
         if door_alarm:
             door_alarm = False
             turn_off_alarm()
+            
     elif sensor_value == 1:
         if current_status is AlarmStatus.ACTIVATED:
             return
-        elif current_status is AlarmStatus.ARMED:
-            if state.get("alarm_config").get("door_alarm", False):
-                if alarm_timer is None:
-                    alarm_timer = Timer(5.0, turn_on_alarm)
-                    alarm_timer.start()
-        else:
-            if state.get("alarm_config").get("door_alarm", False):
+        
+        if state.get("alarm_config").get("open_door_alarm", False):
+            if open_door_timer is None:
                 open_door_timer = Timer(5.0, open_door_alarm)
                 open_door_timer.start()
+
+        if state.get("alarm_config").get("door_alarm", False) and current_status is AlarmStatus.ARMED:
+            if alarm_timer is None:
+                alarm_timer = Timer(10.0, turn_on_alarm)
+                alarm_timer.start()
+
+
+        

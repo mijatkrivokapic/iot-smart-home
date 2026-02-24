@@ -3,7 +3,7 @@
     "DS1": {
       "device": "PI1",
       "component": "DS1",
-      "simulated": false,
+      "simulated": true,
       "pin": 22,
       "topic": "home/sensors/door_sensor"
     },
@@ -25,7 +25,7 @@
     "DB": {
       "device": "PI1",
       "component": "DB",
-      "simulated": false,
+      "simulated": true,
       "pin": 27,
       "topic": "home/actuators/buzzer"
     },
@@ -39,7 +39,7 @@
     "DMS": {
       "device": "PI1",
       "component": "DMS",
-      "simulated": false,
+      "simulated": true,
       "pins": [25, 8, 7, 1, 12, 16, 20, 21],
       "topic": "home/sensors/keypad"
     }

@@ -9,7 +9,7 @@ def generate_distance():
     while True:
         dist = dist + random.randint(-10, 10)
         dist = max(5, min(400, dist))
-        yield dist
+        yield float(dist)
 
 
 def run_dus_simulator(delay, callback, stop_event, sensor_config=None):

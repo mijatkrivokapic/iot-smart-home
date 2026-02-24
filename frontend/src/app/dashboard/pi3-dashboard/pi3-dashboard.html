@@ -28,7 +28,7 @@
       </ng-container>
       <ng-container matColumnDef="timestamp">
         <th mat-header-cell *matHeaderCellDef>Timestamp</th>
-        <td mat-cell *matCellDef="let element">{{ element.value.timestamp }}</td>
+        <td mat-cell *matCellDef="let element">{{ (element.value.timestamp * 1000) | date:'dd.MM.yyyy HH:mm:ss' }}</td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="['sensor', 'value', 'timestamp']"></tr>
       <tr mat-row *matRowDef="let row; columns: ['sensor', 'value', 'timestamp'];"></tr>
