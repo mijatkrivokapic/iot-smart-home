@@ -19,10 +19,11 @@ class SystemState:
             "alarm_status": AlarmStatus.DISARMED,
             "people_count": 0,
             "timer_increment": 10,
-            "alarm_config":{
-                "door_alarm":False,
-                "gyro_alarm":False,
-            }
+            "alarm_config": {
+                "door_alarm": False,
+                "gyro_alarm": False,
+                "people_alarm": False,
+            },
         }
         self._lock = threading.Lock()
         self._arm_timer = None
@@ -85,7 +86,8 @@ class SystemState:
             self._state["people_count"] = new
             print(f"👥 People count changed: {old} -> {new}")
             if (
-                self._state["alarm_status"] is AlarmStatus.ARMED
+                self._state["alarm_config"].get("people_alarm", False)
+                and self._state["alarm_status"] is AlarmStatus.ARMED
                 and old == 0
                 and new > 0
             ):
