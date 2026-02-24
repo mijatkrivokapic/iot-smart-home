@@ -40,6 +40,95 @@
               "viz": false
             },
             "insertNulls": false,
+            "lineWidth": 0,
+            "spanNulls": false
+          },
+          "displayName": "Alarm Status",
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "Deactivated"
+                },
+                "1": {
+                  "color": "red",
+                  "index": 1,
+                  "text": "Activated"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 6,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "auto",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "query": "from(bucket: \"sensor_data\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"alarm\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max)\r\n  |> yield()\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Alarm Status",
+      "type": "state-timeline"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dfc24g6c3356oe"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "shades"
+          },
+          "custom": {
+            "axisPlacement": "auto",
+            "fillOpacity": 70,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
             "lineWidth": 1,
             "spanNulls": false
           },
@@ -81,7 +170,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 0
+        "y": 8
       },
       "id": 1,
       "options": {
@@ -174,7 +263,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 0
+        "y": 8
       },
       "id": 6,
       "options": {
@@ -269,7 +358,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 16
       },
       "id": 2,
       "options": {
@@ -317,19 +406,19 @@
             "lineWidth": 0,
             "spanNulls": false
           },
-          "displayName": "Buzzer Activated",
+          "displayName": "Light Status",
           "mappings": [
             {
               "options": {
                 "0": {
                   "color": "red",
                   "index": 0,
-                  "text": "Deactivated"
+                  "text": "OFF"
                 },
                 "1": {
                   "color": "green",
                   "index": 1,
-                  "text": "Activated"
+                  "text": "ON"
                 }
               },
               "type": "value"
@@ -355,9 +444,9 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 16
       },
-      "id": 5,
+      "id": 17,
       "options": {
         "alignValue": "left",
         "legend": {
@@ -377,11 +466,11 @@
       "pluginVersion": "12.3.2",
       "targets": [
         {
-          "query": "from(bucket: \"sensor_data\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"DB\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max)\r\n  |> yield()\r\n",
+          "query": "from(bucket: \"sensor_data\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"DL\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)\r\n  |> yield()\r\n",
           "refId": "A"
         }
       ],
-      "title": "Door Buzzer",
+      "title": "Door Light",
       "type": "state-timeline"
     },
     {
@@ -440,7 +529,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 16
+        "y": 24
       },
       "id": 3,
       "options": {
@@ -516,7 +605,7 @@
         "h": 8,
         "w": 12,
         "x": 6,
-        "y": 24
+        "y": 32
       },
       "id": 15,
       "options": {
@@ -594,7 +683,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 32
+        "y": 40
       },
       "id": 7,
       "options": {
@@ -693,7 +782,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 32
+        "y": 40
       },
       "id": 11,
       "options": {
@@ -775,7 +864,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 40
+        "y": 48
       },
       "id": 8,
       "options": {
@@ -911,7 +1000,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 40
+        "y": 48
       },
       "id": 12,
       "options": {
@@ -1003,7 +1092,7 @@
         "h": 8,
         "w": 12,
         "x": 6,
-        "y": 48
+        "y": 56
       },
       "id": 10,
       "options": {
@@ -1136,7 +1225,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 56
+        "y": 64
       },
       "id": 13,
       "options": {
@@ -1269,7 +1358,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 56
+        "y": 64
       },
       "id": 14,
       "options": {
@@ -1342,7 +1431,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 64
+        "y": 72
       },
       "id": 4,
       "options": {
@@ -1416,7 +1505,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 64
+        "y": 72
       },
       "id": 16,
       "options": {
@@ -1460,5 +1549,5 @@
   "timezone": "browser",
   "title": "Dashboard",
   "uid": "adk82vw",
-  "version": 21
+  "version": 22
 }
