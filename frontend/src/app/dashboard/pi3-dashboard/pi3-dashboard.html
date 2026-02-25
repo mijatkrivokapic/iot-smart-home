@@ -5,27 +5,15 @@
   </mat-card-header>
   <mat-card-content>
     <div class="rgb-controls">
-      <!-- <div>
-        <label>R</label>
-        <input type="range" min="0" max="255" [(ngModel)]="r" /> {{r}}
-      </div>
-      <div>
-        <label>G</label>
-        <input type="range" min="0" max="255" [(ngModel)]="g" /> {{g}}
-      </div>
-      <div>
-        <label>B</label>
-        <input type="range" min="0" max="255" [(ngModel)]="b" /> {{b}}
-      </div> -->
-
       <div class="preset-buttons">
-        <!-- <button mat-raised-button color="primary" (click)="setColorPreset(255,0,0)">Red</button>
-        <button mat-raised-button color="primary" (click)="setColorPreset(0,255,0)">Green</button>
-        <button mat-raised-button color="primary" (click)="setColorPreset(0,0,255)">Blue</button> -->
         <button mat-raised-button color="primary" (click)="setColorPresetByName('red')">Red</button>
         <button mat-raised-button color="primary" (click)="setColorPresetByName('green')">Green</button>
         <button mat-raised-button color="primary" (click)="setColorPresetByName('blue')">Blue</button>
         <button mat-raised-button color="accent" (click)="sendRgb()">Send</button>
+      </div>
+        <div class="current-color" style="margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+        <strong>Current LED color:</strong>
+        <div class="swatch" [style.background]="'rgb(' + r + ',' + g + ',' + b + ')'" style="width:28px; height:20px; border:1px solid #ccc"></div>
       </div>
     </div>
 
@@ -40,7 +28,7 @@
       </ng-container>
       <ng-container matColumnDef="timestamp">
         <th mat-header-cell *matHeaderCellDef>Timestamp</th>
-        <td mat-cell *matCellDef="let element">{{ element.value.timestamp }}</td>
+        <td mat-cell *matCellDef="let element">{{ (element.value.timestamp * 1000) | date:'dd.MM.yyyy HH:mm:ss' }}</td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="['sensor', 'value', 'timestamp']"></tr>
       <tr mat-row *matRowDef="let row; columns: ['sensor', 'value', 'timestamp'];"></tr>

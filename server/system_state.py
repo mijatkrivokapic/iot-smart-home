@@ -19,10 +19,12 @@ class SystemState:
             "alarm_status": AlarmStatus.DISARMED,
             "people_count": 0,
             "timer_increment": 10,
-            "alarm_config":{
-                "door_alarm":False,
-                "gyro_alarm":False,
-            }
+            "alarm_config": {
+                "open_door_alarm": False,
+                "door_alarm": False,
+                "gyro_alarm": False,
+                "sensor_alarm": False,
+            },
         }
         self._lock = threading.Lock()
         self._arm_timer = None
@@ -84,18 +86,25 @@ class SystemState:
                 new = 0
             self._state["people_count"] = new
             print(f"👥 People count changed: {old} -> {new}")
-            if (
-                self._state["alarm_status"] is AlarmStatus.ARMED
-                and old == 0
-                and new > 0
-            ):
-                self.set_alarm_status(AlarmStatus.ACTIVATED)
             socketio_helper.socketio.emit("state-update", self._state)
 
     def set_alarm_config(self, config):
         with self._lock:
             self._state["alarm_config"] = config
             print(f"📢 Alarm configuration updated: {config}")
+            socketio_helper.socketio.emit("state-update", self._state)
+
+    def set_people_count(self, count: int = 0):
+        with self._lock:
+            try:
+                new = int(count)
+            except Exception:
+                return
+            old = int(self._state.get("people_count", 0))
+            if new < 0:
+                new = 0
+            self._state["people_count"] = new
+            print(f"👥 People count set: {old} -> {new}")
             socketio_helper.socketio.emit("state-update", self._state)
 
     def get(self, key):

@@ -1,7 +1,7 @@
 from threading import Timer
 
 from mqtt_helper import send_actuator_command
-from system_state import state
+from system_state import AlarmStatus, state
 
 from .dus import MotionDirection, infer_direction
 
@@ -15,10 +15,22 @@ def turn_off_light():
     light_timer = None
 
 
+def turn_on_alarm():
+    if (
+        state.get("alarm_status") is AlarmStatus.ARMED
+        and state.get("people_count") == 0
+    ):
+        state.set_alarm_status(AlarmStatus.ACTIVATED)
+        print("🚨 Alarm Activated due to motion detected while armed!")
+
+
 def handle_pir(payload):
     global light_timer
 
     if payload.get("value") == 1:
+        if state.get("alarm_config").get("sensor_alarm", False):
+            turn_on_alarm()
+
         if payload.get("device") == "PI1":
             send_actuator_command("PI1", "DL", 1)
 
