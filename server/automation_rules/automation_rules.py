@@ -12,6 +12,7 @@ from .ds2 import handle_ds2
 SENSOR_RULES = {
     "DPIR1": [handle_pir],
     "DPIR2": [handle_pir],
+    "DPIR3": [handle_pir],
     "IR": [handle_ir],
     "DHT1": [handle_dht],
     "DHT2": [handle_dht],

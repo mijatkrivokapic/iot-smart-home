@@ -29,10 +29,10 @@ def handle_ds(payload):
         if current_status is AlarmStatus.ACTIVATED:
             return
 
-        if state.get("alarm_config").get("door_alarm", False) and current_status is AlarmStatus.ARMED:
+        if (
+            state.get("alarm_config").get("door_alarm", False)
+            and current_status is AlarmStatus.ARMED
+        ):
             if alarm_timer is None:
                 alarm_timer = Timer(10.0, turn_on_alarm)
                 alarm_timer.start()
-
-
-        

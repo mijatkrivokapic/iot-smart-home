@@ -138,7 +138,7 @@
       "component": "LCD",
       "simulated": true,
       "pins": { "rs": 0, "e": 2, "db": [4, 5, 6, 7] },
-      "topic": "home/actuators/lcd_display"
+      "topic": "home/sensors/lcd_display"
     }
   },
   "MQTT": {
