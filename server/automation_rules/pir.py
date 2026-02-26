@@ -19,6 +19,7 @@ def turn_on_alarm():
     if (
         state.get("alarm_status") is AlarmStatus.ARMED
         and state.get("people_count") == 0
+        and not state.get("alarm_door_timer")
     ):
         state.set_alarm_status(AlarmStatus.ACTIVATED)
         print("🚨 Alarm Activated due to motion detected while armed!")
