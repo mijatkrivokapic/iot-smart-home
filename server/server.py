@@ -142,9 +142,16 @@ def write_to_influxdb(topic, payload):
                 .field("value", 1 if value else 0)
                 .time(int(timestamp * 1e9))
             )
-        elif "LCD" in sensor_name or "BRGB" in sensor_name:
-            pass
+        elif "LCD" in sensor_name:
+            return
         else:
+            if "BRGB" in sensor_name:
+                if value['r']==1:
+                    value = "red"
+                elif value['g']==1:
+                    value = "green"
+                elif value['b']==1:
+                    value = "blue"
             # Create InfluxDB Point
             point = (
                 Point(sensor_name)  # measurement name
