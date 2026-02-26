@@ -24,7 +24,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -113,7 +113,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -206,7 +206,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -295,7 +295,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -387,7 +387,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -476,7 +476,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -561,7 +561,96 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "shades"
+          },
+          "custom": {
+            "axisPlacement": "auto",
+            "fillOpacity": 70,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineWidth": 0,
+            "spanNulls": false
+          },
+          "displayName": "Buzzer Status",
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "OFF"
+                },
+                "1": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "ON"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "id": 18,
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "auto",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "query": "from(bucket: \"sensor_data\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"DB\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: max, createEmpty: false)\r\n  |> yield()\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Door Buzzer",
+      "type": "state-timeline"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -626,7 +715,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -719,7 +808,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -811,7 +900,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -896,7 +985,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -1029,7 +1118,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -1121,7 +1210,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -1254,7 +1343,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -1387,7 +1476,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -1452,7 +1541,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "dfc24g6c3356oe"
+        "uid": "cfc49arfmyhogd"
       },
       "fieldConfig": {
         "defaults": {
@@ -1536,18 +1625,19 @@
     }
   ],
   "preload": false,
+  "refresh": "10s",
   "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Dashboard",
   "uid": "adk82vw",
-  "version": 22
+  "version": 5
 }

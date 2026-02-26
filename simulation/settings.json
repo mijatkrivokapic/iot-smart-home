@@ -27,7 +27,7 @@
       "component": "DB",
       "simulated": true,
       "pin": 27,
-      "topic": "home/actuators/buzzer"
+      "topic": "home/sensors/buzzer"
     },
     "DPIR1": {
       "device": "PI1",
