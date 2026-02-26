@@ -1,0 +1,38 @@
+.dashboard-card {
+  margin: 12px;
+}
+
+.rgb-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 12px;
+}
+
+.rgb-controls > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rgb-controls input[type="range"] {
+  width: 240px;
+}
+
+.preset-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+table.mat-elevation-z2 {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* smaller screens */
+@media (max-width: 600px) {
+  .rgb-controls input[type="range"] {
+    width: 160px;
+  }
+}
