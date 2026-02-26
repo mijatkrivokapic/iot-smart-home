@@ -19,6 +19,7 @@ class SystemState:
             "alarm_status": AlarmStatus.DISARMED,
             "people_count": 0,
             "timer_increment": 10,
+            "alarm_door_timer": False,
             "alarm_config": {
                 "open_door_alarm": False,
                 "door_alarm": False,
@@ -36,6 +37,7 @@ class SystemState:
             send_actuator_command("PI1", "DB", 1, None)
             print("🚀 Command Sent: BUZZER ON")
         elif status is AlarmStatus.DISARMED:
+            self._state["alarm_door_timer"] = False
             send_actuator_command("PI1", "DB", 0, None)
             print("🛑 Command Sent: BUZZER OFF")
         socketio_helper.socketio.emit("state-update", self._state)
@@ -106,6 +108,11 @@ class SystemState:
             self._state["people_count"] = new
             print(f"👥 People count set: {old} -> {new}")
             socketio_helper.socketio.emit("state-update", self._state)
+
+    def set_alarm_door_timer(self, value: bool):
+        with self._lock:
+            self._state["alarm_door_timer"] = value
+            print(f"📢 Alarm door timer set to: {value}")
 
     def get(self, key):
         with self._lock:

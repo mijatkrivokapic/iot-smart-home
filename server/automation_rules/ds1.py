@@ -21,7 +21,7 @@ def turn_off_alarm():
 
 
 def handle_ds1(payload):
-    global alarm_timer, open_door_timer, door_alarm
+    global open_door_timer, door_alarm
     sensor_value = payload.get("value")
     current_status = state.get("alarm_status")
 
@@ -33,15 +33,12 @@ def handle_ds1(payload):
         if door_alarm:
             door_alarm = False
             turn_off_alarm()
-            
+
     elif sensor_value == 1:
         if current_status is AlarmStatus.ACTIVATED:
             return
-        
+
         if state.get("alarm_config").get("open_door_alarm", False):
             if open_door_timer is None:
                 open_door_timer = Timer(5.0, open_door_alarm)
                 open_door_timer.start()
-
-
-        
