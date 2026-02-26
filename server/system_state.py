@@ -37,6 +37,7 @@ class SystemState:
             send_actuator_command("PI1", "DB", 1, None)
             print("🚀 Command Sent: BUZZER ON")
         elif status is AlarmStatus.DISARMED:
+            self._state["alarm_door_timer"] = False
             send_actuator_command("PI1", "DB", 0, None)
             print("🛑 Command Sent: BUZZER OFF")
         socketio_helper.socketio.emit("state-update", self._state)
